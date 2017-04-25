@@ -1,0 +1,12 @@
+package de.hsa.games.fatsquirrel.core;
+
+
+public class BotSquirrel extends MasterSquirrel {
+
+    private static final int ENERGY = 1000;
+
+    public BotSquirrel(EntityTypes entityType, int energy, XY position) {
+        super(entityType, energy + ENERGY, position);
+    }
+
+}
