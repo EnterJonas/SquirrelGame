@@ -11,10 +11,10 @@ public class GameImpl extends Game {
 
     @Override
     protected void render() {
-        for (int y = 0; y < flattenedBoard.getWorld().length; y++) {
-            for (int x = 0; x < flattenedBoard.getWorld()[y].length; x++) {
-                if (flattenedBoard.getWorld()[y][x] != null)
-                    System.out.print(flattenedBoard.getWorld()[y][x]);
+        for (int y = 0; y < state.flattenedBoard().getWorld().length; y++) {
+            for (int x = 0; x < state.flattenedBoard().getWorld()[y].length; x++) {
+                if (state.flattenedBoard().getWorld()[y][x] != null)
+                    System.out.print(state.flattenedBoard().getWorld()[y][x]);
                 else System.out.print(" ");
             }
             System.out.print('\n');

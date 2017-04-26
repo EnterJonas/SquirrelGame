@@ -12,7 +12,7 @@ public class State {
     }
 
     public void update(){
-
+        flattenedBoard().getWorld();
     }
 
     public FlattenedBoard flattenedBoard(){

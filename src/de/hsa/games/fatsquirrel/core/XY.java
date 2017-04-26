@@ -12,8 +12,8 @@ public class XY {
         this.y = y;
     }
 
-    public XY setNewPosition(XY location) {
-        return new XY(location.getY(), location.getX());
+    public XY setNewPosition(XY currentLocation, XY vector) {
+        return new XY(currentLocation.getY() + vector.getY(), currentLocation.getX()+vector.getX());
     }
 
     public XY getNewPosition(XY currentLocation) {
@@ -54,6 +54,22 @@ public class XY {
             return vector.getY() + vector.getX();
         else
             return steps;
+    }
+
+    public XY createMovementVector(XY vector){
+        int x = 0;
+        int y = 0;
+        if(vector.getY() > 0){
+            y = 1;
+        }else if(vector.getY() < 0){
+            y = -1;
+        }
+        if(vector.getX() > 0){
+            x = 1;
+        }else if (vector.getX() < 0){
+            x = -1;
+        }
+        return new XY (y,x);
     }
 
     public int getX() {

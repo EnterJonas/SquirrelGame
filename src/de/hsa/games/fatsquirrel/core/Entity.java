@@ -47,4 +47,8 @@ public abstract class Entity {
         return this.position;
     }
 
+    public void updatePosition(XY position){
+        this.position = position;
+    }
+
 }

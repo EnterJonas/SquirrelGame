@@ -117,7 +117,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             populateWorld(initWorld);
         }
 
-        //returns or rather provides the world
+        //updates the world before returning it
         private Entity[][] flatten() {
             updateWorld();
             return initWorld;
@@ -130,7 +130,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
     }
 
     private Board board;
-    private State state;
 
     //constructor FlattenedBoard
     public FlattenedBoard(){
@@ -157,9 +156,9 @@ public class FlattenedBoard implements EntityContext, BoardView {
     }
 
     @Override
-    public void tryMove() {
-        int position = getBoard().getEntitySet().getSet().getSize();
-        Entity current = getBoard().getEntitySet().getSet().getEntityAtPosition(position);
+    public void tryMove(EntityTypes entityType, XY moveDirection) {
+        int position = getBoard().getEntitySet().getSet().getSize(); // assigns amount of all existing Entities
+        Entity current = getBoard().getEntitySet().getSet().getEntityAtPosition(position); //Courser equals listTail due to position
         while(current.getEntityType() != EntityTypes.Wall){
             if(current instanceof HandOperatedMasterSquirrel){
                 ((Movable) current).nextStep(this );
@@ -177,7 +176,11 @@ public class FlattenedBoard implements EntityContext, BoardView {
         return board;
     }
 
-    //provides public access to world
+    public EntitySet getEntitySet(){
+        return getBoard().getEntitySet();
+    }
+
+    //provides public access to world !updated world!
     public Entity[][] getWorld(){
         return getBoard().flatten();
     }

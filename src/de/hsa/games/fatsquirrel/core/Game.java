@@ -2,7 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 public abstract class Game {
 
-    private State state;
+    protected State state;
     protected XY moveDirection;
 
 

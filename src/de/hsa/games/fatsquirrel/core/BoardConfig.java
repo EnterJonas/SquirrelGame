@@ -3,13 +3,13 @@ package de.hsa.games.fatsquirrel.core;
 
 public class BoardConfig {
 
-    private String amountWall = "10";
-    private String amountGoodBeast = "1";
-    private String amountBadBeast = "1";
-    private String amountBadPlant = "1";
-    private String amountGoodPlant = "1";
-    private String amountHandOperatedMasterSquirrel = "5";
-    private String amountBotMasterSquirrel = "5";
+    private String amountWall = "50";
+    private String amountGoodBeast = "10";
+    private String amountBadBeast = "10";
+    private String amountBadPlant = "10";
+    private String amountGoodPlant = "10";
+    private String amountHandOperatedMasterSquirrel = "1";
+    private String amountBotMasterSquirrel = "0";
 
     private int pitchWidth = 40;
     private int pitchHeight = 20;
