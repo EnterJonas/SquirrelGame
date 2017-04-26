@@ -6,8 +6,6 @@ public class ConsoleUI implements UI {
 
     private Scanner scanner = new Scanner(System.in);
 
-
-
     @Override
     public XY getCommand() {
         char input = scanner.next().charAt(0);

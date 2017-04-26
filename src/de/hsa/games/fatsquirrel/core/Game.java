@@ -4,10 +4,12 @@ public abstract class Game {
 
     protected State state;
     protected XY moveDirection;
+    BoardView boardView;
 
 
     public Game(State state){
         this.state = state;
+        this.boardView = state.flattenedBoard();
         run();
     }
 
