@@ -8,7 +8,7 @@ public class MiniSquirrel extends Squirrel {
     }
 
     @Override
-    public void nextStep() {
+    public void nextStep(EntityContext context) {
 
     }
 

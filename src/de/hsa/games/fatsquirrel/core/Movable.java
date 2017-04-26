@@ -6,7 +6,7 @@ public abstract class Movable extends Entity {
         super(entityType, energy, position);
     }
 
-    public abstract void nextStep();
+    public abstract void nextStep(EntityContext context);
 
 
 }

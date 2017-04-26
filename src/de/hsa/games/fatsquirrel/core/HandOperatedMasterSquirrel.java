@@ -10,7 +10,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
     }
 
     @Override
-    public void nextStep() {
+    public void nextStep(EntityContext context) {
 
     }
 

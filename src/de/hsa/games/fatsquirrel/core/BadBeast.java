@@ -10,7 +10,7 @@ public class BadBeast extends Movable{
     }
 
     @Override
-    public void nextStep() {
+    public void nextStep(EntityContext context) {
 
     }
 

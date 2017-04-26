@@ -32,19 +32,33 @@ public class FlattenedBoard implements EntityContext, BoardView {
                     }
                 }
             }
-            populateWorld(entitySet.getSet().getSize(),emptyWorld);
+            String[][] listingCopy = boardConfig.getEntityListing().clone();
+            for(int w = 0; w < Integer.parseInt((listingCopy[0][1])); w++){
+                createNewEntity(EntityTypes.valueOf(listingCopy[0][0]));
+            }
+
+            createWalls(emptyWorld);
+        }
+
+        private void createWalls(Entity[][] emptyWorld){
+            int position = entitySet.getSet().getSize();
+            while(position > 0){
+                Entity current = entitySet.getSet().getEntityAtPosition(position--);
+                XY cP = current.getPosition(); //cP: currentPosition
+                emptyWorld[cP.getY()][cP.getX()] = current;
+            }
         }
 
         //creates populated World
         private void createInitWorld() {
             initWorld = cloneWorld(emptyWorld);
             String[][] listingCopy = boardConfig.getEntityListing().clone();
-            for (int z = 0; z < listingCopy.length; z++) {
+            for (int z = 1; z < listingCopy.length; z++) {
                 for (int w = 0; w < Integer.parseInt(listingCopy[z][1]); w++) {
                     createNewEntity(EntityTypes.valueOf(listingCopy[z][0]));
                 }
             }
-            populateWorld(this.entityAmount, initWorld);
+            populateWorld(initWorld);
             printWorld();
         }
 
@@ -64,11 +78,14 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
 
         //writes world array
-        private void populateWorld(int amountEntities, Entity[][] world){
-            for(int position = entitySet.getSet().getSize(); position > (entitySet.getSet().getSize()-amountEntities); position--){
-                Entity current = entitySet.getSet().getEntityAtPosition(position);
+        private void populateWorld(Entity[][] world){
+            int position = entitySet.getSet().getSize();
+            Entity current = entitySet.getSet().getEntityAtPosition(position);
+            while(current.getEntityType() != EntityTypes.Wall){
+                current = entitySet.getSet().getEntityAtPosition(position);
                 XY cP = current.getPosition(); //cP: currentPosition
                 world[cP.getY()][cP.getX()] = current;
+                position--;
             }
         }
 
@@ -98,7 +115,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
         //places Entities at their current position in world
         private void updateWorld() {
             initWorld = cloneWorld(emptyWorld);
-            populateWorld(this.entityAmount, initWorld);
+            populateWorld(initWorld);
         }
 
         //returns or rather provides the world
