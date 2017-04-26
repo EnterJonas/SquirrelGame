@@ -10,7 +10,7 @@ public class BotSquirrel extends MasterSquirrel {
     }
 
     @Override
-    public void nextStep(EntityContext context) {
+    public void nextStep(EntityContext context, XY moveDirection) {
 
     }
 

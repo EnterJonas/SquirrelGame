@@ -8,7 +8,7 @@ public abstract class Movable extends Entity {
         super(entityType, energy, position);
     }
 
-    public abstract void nextStep(EntityContext context);
+    public abstract void nextStep(EntityContext context, XY moveDirection);
 
     public void runAround(EntityContext context){
         XY temp = this.getPosition().getNewPosition(this.getPosition());

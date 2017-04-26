@@ -12,8 +12,8 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
     }
 
     @Override
-    public void nextStep(EntityContext context) {
-
+    public void nextStep(EntityContext context, XY moveDirection) {
+        this.updatePosition(this.getPosition().setNewPosition(this.getPosition(), moveDirection));
     }
 
 

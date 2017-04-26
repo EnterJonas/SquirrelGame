@@ -156,13 +156,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     @Override
     public void tryMove(EntityTypes entityType, XY moveDirection) {
-        int position = getBoard().getEntitySet().getSet().getSize(); // assigns amount of all existing Entities
-        Entity current = getBoard().getEntitySet().getSet().getEntityAtPosition(position); //Courser equals listTail due to position
-        while(current.getEntityType() != EntityTypes.Wall){
-            if(current instanceof HandOperatedMasterSquirrel){
-                ((Movable) current).nextStep(this );
-            }
-        }
+        XY move = moveDirection;
     }
 
     @Override

@@ -7,14 +7,14 @@ public abstract class Game {
     BoardView boardView;
 
 
-    public Game(State state){
+    public Game(State state) {
         this.state = state;
         this.boardView = state.flattenedBoard();
         run();
     }
 
-    public void run(){
-        while(true){
+    public void run() {
+        while (true) {
             render();
             progressInput();
             update();
@@ -25,12 +25,17 @@ public abstract class Game {
 
     protected abstract void progressInput();
 
-    protected void update(){
+    protected void update() {
         state.update();
         int position = state.flattenedBoard().getEntitySet().getSet().getSize();
         Entity current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
-        while(current instanceof Movable){
-            ((Movable) current).nextStep(state.flattenedBoard());
+        while (current instanceof Movable) {
+            if (current.getEntityType() == EntityTypes.HandOperatedMasterSquirrel) {
+                ((Movable) current).nextStep(state.flattenedBoard(), moveDirection);
+            } else {
+                ((Movable) current).nextStep(state.flattenedBoard(), null);
+
+            }
             position--;
             current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
         }
