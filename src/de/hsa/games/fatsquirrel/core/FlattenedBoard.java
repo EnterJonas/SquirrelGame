@@ -130,6 +130,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
     }
 
     private Board board;
+    private State state;
 
     //constructor FlattenedBoard
     public FlattenedBoard(){

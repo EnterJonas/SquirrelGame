@@ -3,15 +3,19 @@ package de.hsa.games.fatsquirrel.core;
 
 public class State {
 
-    FlattenedBoard board;
+    private FlattenedBoard board;
     private int highScore;
 
-    public State(){
-        board = new FlattenedBoard();
+    public State(FlattenedBoard board){
+        this.board = board;
         update();
     }
 
     public void update(){
 
+    }
+
+    public FlattenedBoard flattenedBoard(){
+        return this.board;
     }
 }

@@ -11,7 +11,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     @Override
     public void nextStep(EntityContext context) {
-        context.
+        context.tryMove();
     }
 
 

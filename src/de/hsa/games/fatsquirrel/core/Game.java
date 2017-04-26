@@ -2,6 +2,14 @@ package de.hsa.games.fatsquirrel.core;
 
 public abstract class Game {
 
+    private State state;
+    protected XY moveDirection;
+
+
+    public Game(State state){
+        this.state = state;
+        run();
+    }
 
     public void run(){
         while(true){
@@ -11,12 +19,12 @@ public abstract class Game {
         }
     }
 
-    public abstract void render();
+    protected abstract void render();
 
-    public abstract void progressInput();
+    protected abstract void progressInput();
 
     protected void update(){
-        State state = new State();
+        state.update();
     }
 
 }

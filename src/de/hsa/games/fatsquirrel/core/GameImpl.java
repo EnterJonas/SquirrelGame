@@ -3,21 +3,26 @@ package de.hsa.games.fatsquirrel.core;
 
 public class GameImpl extends Game {
 
-    private ConsoleUI consoleUI;
-    private XY moveDirection;
 
-    public GameImpl(){
-        consoleUI = new ConsoleUI();
-        run();
+
+    public GameImpl(State state){
+        super(state);
     }
 
     @Override
-    public void render() {
-
+    protected void render() {
+        for (int y = 0; y < flattenedBoard.getWorld().length; y++) {
+            for (int x = 0; x < flattenedBoard.getWorld()[y].length; x++) {
+                if (flattenedBoard.getWorld()[y][x] != null)
+                    System.out.print(flattenedBoard.getWorld()[y][x]);
+                else System.out.print(" ");
+            }
+            System.out.print('\n');
+        }
     }
 
     @Override
-    public void progressInput() {
-        moveDirection = consoleUI.getCommand();
+    protected void progressInput() {
+        moveDirection = new ConsoleUI().getCommand();
     }
 }
