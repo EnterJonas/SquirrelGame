@@ -10,7 +10,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
         private Entity[][] emptyWorld;
         private Entity[][] initWorld;
         private EntitySet entitySet;
-        private int entityAmount;
 
         //Board constructor
         private Board() {
@@ -18,7 +17,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
             this.emptyWorld = new Entity[boardConfig.getPitchHeight()][boardConfig.getPitchWidth()];
             this.initWorld = new Entity[boardConfig.getPitchHeight()][boardConfig.getPitchWidth()];
             this.entitySet = new EntitySet();
-            this.entityAmount = boardConfig.getAmountEntities();
             createNewWorld();
             createInitWorld();
         }
@@ -40,6 +38,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             createWalls(emptyWorld);
         }
 
+        //creates Wall Entities for empty World
         private void createWalls(Entity[][] emptyWorld){
             int position = entitySet.getSet().getSize();
             while(position > 0){
@@ -124,6 +123,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             return initWorld;
         }
 
+        //returns EntitySet
         private EntitySet getEntitySet(){
             return this.entitySet;
         }
@@ -157,7 +157,13 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     @Override
     public void tryMove() {
-
+        int position = getBoard().getEntitySet().getSet().getSize();
+        Entity current = getBoard().getEntitySet().getSet().getEntityAtPosition(position);
+        while(current.getEntityType() != EntityTypes.Wall){
+            if(current instanceof HandOperatedMasterSquirrel){
+                ((Movable) current).nextStep(this );
+            }
+        }
     }
 
     @Override

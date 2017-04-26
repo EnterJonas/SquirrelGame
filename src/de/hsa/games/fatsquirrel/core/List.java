@@ -124,6 +124,19 @@ public class List {
         return false;
     }
 
+    public Entity getIntersectingObject(XY position){
+        current = listHead;
+        while (current != null){
+            Entity helper = (Entity) current.getData();
+            if(helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX()){
+                return helper;
+            }
+            current = current.getNextElement();
+        }
+        current = listTail;
+        return null;
+    }
+
     //returns Entity from position in list
     public Entity getEntityAtPosition(int positionInList){
         if(!isEmpty()){
