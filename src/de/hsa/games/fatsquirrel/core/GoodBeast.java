@@ -9,6 +9,11 @@ public class GoodBeast extends Movable {
         super(entityType, energy + ENERGY, position);
     }
 
+    @Override
+    public void nextStep() {
+
+    }
+
     public String toString(){
         return "G";
     }

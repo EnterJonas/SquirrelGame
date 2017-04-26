@@ -9,6 +9,10 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
         super(entityType, energy + ENERGY, position);
     }
 
+    @Override
+    public void nextStep() {
+
+    }
 
 
 }

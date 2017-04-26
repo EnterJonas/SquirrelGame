@@ -23,12 +23,10 @@ public class XY {
         return new XY(currentY + random.nextInt(1 + 1 + 1) - 1, currentX + random.nextInt(1 + 1 + 1) - 1);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    //returns random moveDirection for (Good- and BadBeast as well as for Mini- and BotSquirrel)
+    public XY getMoveDirection() {
+        Random random = new Random();
+        return new XY(random.nextInt(1 + 1 + 1) - 1, random.nextInt(1 + 1 + 1) - 1);
     }
 
     //subtracts one position from another
@@ -56,6 +54,14 @@ public class XY {
             return vector.getY() + vector.getX();
         else
             return steps;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     @Override

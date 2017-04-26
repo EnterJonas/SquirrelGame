@@ -8,6 +8,7 @@ public class State {
 
     public State(){
         board = new FlattenedBoard();
+        update();
     }
 
     public void update(){

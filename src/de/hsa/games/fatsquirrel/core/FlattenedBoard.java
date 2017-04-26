@@ -2,7 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 import java.util.Random;
 
-public class FlattenedBoard implements EntityContext {
+public class FlattenedBoard implements EntityContext, BoardView {
 
     private class Board {
 
@@ -119,6 +119,7 @@ public class FlattenedBoard implements EntityContext {
         board = new Board();
     }
 
+    //returns nearest Squirrel
     public Squirrel nearestPlayerEntity(XY positionOfEntityLookingForPlayer){
         Squirrel [] squirrels = getBoard().getEntitySet().getSet().getSquirrelsInList();
         Squirrel tempSquirrel;
@@ -137,8 +138,15 @@ public class FlattenedBoard implements EntityContext {
         return squirrels[0];
     }
 
+    @Override
+    public void tryMove() {
 
+    }
 
+    @Override
+    public EntityTypes getEntityType(int y, int x) {
+       return getWorld()[y][x].getEntityType();
+    }
 
     //provides public access to board.obj
     public Board getBoard(){

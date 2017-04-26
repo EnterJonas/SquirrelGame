@@ -7,4 +7,9 @@ public class MiniSquirrel extends Squirrel {
         super(entityType, energy, position);
     }
 
+    @Override
+    public void nextStep() {
+
+    }
+
 }

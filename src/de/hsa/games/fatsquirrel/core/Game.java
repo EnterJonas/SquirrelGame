@@ -16,7 +16,7 @@ public abstract class Game {
     public abstract void progressInput();
 
     protected void update(){
-
+        State state = new State();
     }
 
 }

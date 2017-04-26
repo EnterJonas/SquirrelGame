@@ -9,4 +9,9 @@ public class BotSquirrel extends MasterSquirrel {
         super(entityType, energy + ENERGY, position);
     }
 
+    @Override
+    public void nextStep() {
+
+    }
+
 }
