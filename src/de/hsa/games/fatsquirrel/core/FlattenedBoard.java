@@ -58,7 +58,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 }
             }
             populateWorld(initWorld);
-            printWorld();
         }
 
         //creates new Entity, if position not already in use
@@ -100,16 +99,16 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
 
         //prints the world (for testing purpose only)
-        private void printWorld() {
-            for (int x = 0; x < initWorld.length; x++) {
-                for (int y = 0; y < initWorld[x].length; y++) {
-                    if (initWorld[x][y] != null)
-                        System.out.print(initWorld[x][y]);
-                    else System.out.print(" ");
-                }
-                System.out.print('\n');
-            }
-        }
+//        private void printWorld() {
+//            for (int x = 0; x < initWorld.length; x++) {
+//                for (int y = 0; y < initWorld[x].length; y++) {
+//                    if (initWorld[x][y] != null)
+//                        System.out.print(initWorld[x][y]);
+//                    else System.out.print(" ");
+//                }
+//                System.out.print('\n');
+//            }
+//        }
 
         //places Entities at their current position in world
         private void updateWorld() {
@@ -183,6 +182,11 @@ public class FlattenedBoard implements EntityContext, BoardView {
     //provides public access to world !updated world!
     public Entity[][] getWorld(){
         return getBoard().flatten();
+    }
+
+    public void killAndReplace(Entity entityToKill){
+        getEntitySet().getSet().remove(entityToKill);
+        getBoard().createNewEntity(entityToKill.getEntityType());
     }
 
 }

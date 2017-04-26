@@ -27,6 +27,14 @@ public abstract class Game {
 
     protected void update(){
         state.update();
+        int position = state.flattenedBoard().getEntitySet().getSet().getSize();
+        Entity current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
+        while(current instanceof Movable){
+            ((Movable) current).nextStep(state.flattenedBoard());
+            position--;
+            current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
+        }
+
     }
 
 }

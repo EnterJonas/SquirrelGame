@@ -4,10 +4,10 @@ package de.hsa.games.fatsquirrel.core;
 public class BoardConfig {
 
     private String amountWall = "50";
-    private String amountGoodBeast = "10";
-    private String amountBadBeast = "10";
     private String amountBadPlant = "10";
     private String amountGoodPlant = "10";
+    private String amountGoodBeast = "10";
+    private String amountBadBeast = "10";
     private String amountHandOperatedMasterSquirrel = "1";
     private String amountBotMasterSquirrel = "0";
 
@@ -25,10 +25,10 @@ public class BoardConfig {
     //returns String Array with amount and Type of initial Entities
     public String[][] getEntityListing() {
         return new String[][]{{EntityTypes.Wall.toString(), amountWall},
-                {EntityTypes.GoodBeast.toString(), amountGoodBeast},
-                {EntityTypes.BadBeast.toString(), amountBadBeast},
                 {EntityTypes.BadPlant.toString(), amountBadPlant},
                 {EntityTypes.GoodPlant.toString(), amountGoodPlant},
+                {EntityTypes.GoodBeast.toString(), amountGoodBeast},
+                {EntityTypes.BadBeast.toString(), amountBadBeast},
                 {EntityTypes.HandOperatedMasterSquirrel.toString(), amountHandOperatedMasterSquirrel},
                 {EntityTypes.BotSquirrel.toString(), amountBotMasterSquirrel}};
     }

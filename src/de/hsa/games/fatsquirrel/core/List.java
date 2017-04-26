@@ -124,11 +124,13 @@ public class List {
         return false;
     }
 
-    public Entity getIntersectingObject(XY position){
+
+
+    public Entity getIntersectingObject(XY position, Entity currentEntity){
         current = listHead;
         while (current != null){
             Entity helper = (Entity) current.getData();
-            if(helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX()){
+            if(helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX() && helper.getEntityType() != currentEntity.getEntityType()){
                 return helper;
             }
             current = current.getNextElement();
