@@ -13,7 +13,13 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     @Override
     public void nextStep(EntityContext context, XY moveDirection) {
-        this.updatePosition(this.getPosition().setNewPosition(this.getPosition(), moveDirection));
+        if (!context.getEntitySet().getSet().isIntersecting(this.getPosition().setNewPosition(this.getPosition(), moveDirection)) && suspensionCounter <= 0) {
+            this.updatePosition(this.getPosition().setNewPosition(this.getPosition(), moveDirection));
+        }else if (!context.getEntitySet().getSet().isIntersecting(this.getPosition().setNewPosition(this.getPosition(), moveDirection)) && suspensionCounter > 0){
+            suspensionCounter--;
+        }else{
+            whatToDo(context,moveDirection);
+        }
     }
 
 

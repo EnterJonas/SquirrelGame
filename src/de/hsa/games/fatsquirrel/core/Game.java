@@ -29,15 +29,16 @@ public abstract class Game {
         state.update();
         int position = state.flattenedBoard().getEntitySet().getSet().getSize();
         Entity current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
-        while (current instanceof Movable) {
-            if (current.getEntityType() == EntityTypes.HandOperatedMasterSquirrel) {
-                ((Movable) current).nextStep(state.flattenedBoard(), moveDirection);
-            } else {
-                ((Movable) current).nextStep(state.flattenedBoard(), null);
+        while (position > 1) {
+            if (current instanceof Movable) {
+                if (current.getEntityType() == EntityTypes.HandOperatedMasterSquirrel) {
+                    ((Movable) current).nextStep(state.flattenedBoard(), moveDirection);
+                } else {
+                    ((Movable) current).nextStep(state.flattenedBoard(), null);
 
+                }
             }
-            position--;
-            current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
+            current = state.flattenedBoard().getEntitySet().getSet().getEntityAtPosition(--position);
         }
 
     }

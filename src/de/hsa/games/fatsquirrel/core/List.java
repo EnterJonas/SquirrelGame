@@ -124,14 +124,19 @@ public class List {
         return false;
     }
 
-
-
+    //returns intersecting Object in case it's not the same type
     public Entity getIntersectingObject(XY position, Entity currentEntity){
         current = listHead;
         while (current != null){
             Entity helper = (Entity) current.getData();
-            if(helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX() && helper.getEntityType() != currentEntity.getEntityType()){
-                return helper;
+            if(currentEntity != null) {
+                if (helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX() && helper.getEntityType() != currentEntity.getEntityType()) {
+                    return helper;
+                }
+            }else{
+                if (helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX()) {
+                    return helper;
+                }
             }
             current = current.getNextElement();
         }
@@ -142,13 +147,14 @@ public class List {
     //returns Entity from position in list
     public Entity getEntityAtPosition(int positionInList){
         if(!isEmpty()){
-            int currentPosition = this.getSize();
             current = listTail;
-            while(currentPosition > positionInList){
-                currentPosition--;
+            for(int currentPosition = this.getSize(); currentPosition > positionInList; currentPosition--){
+                if(current != null)
                 current = current.getPreviousElement();
             }
-            return (Entity) current.getData();
+            if (current != null) {
+                return (Entity) current.getData();
+            }
         }
         current = listTail;
         return null;
@@ -168,6 +174,7 @@ public class List {
         }
         Squirrel [] squirrels = new Squirrel[counter];
         System.arraycopy(container, 0, squirrels, 0, squirrels.length);
+        current = listTail;
         return squirrels;
     }
 
