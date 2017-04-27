@@ -74,28 +74,28 @@ public class List {
     }
 
     //iterates current ot position in list where (if existent) removeEntity is located
-    private void iterateCurrent(Entity removeEntity){
+    private void iterateCurrent(Entity removeEntity) {
         current = listTail;
         Entity helper = (Entity) current.getData();
-        while(!helper.equals(removeEntity)){
+        while (!helper.equals(removeEntity)) {
             current = current.getPreviousElement();
             helper = (Entity) current.getData();
         }
     }
 
     //removes ->current<- ListElement
-    public void remove(Entity removeEntity){
+    public void remove(Entity removeEntity) {
         iterateCurrent(removeEntity);
-        if(current == listHead){
+        if (current == listHead) {
             listHead = current.getNextElement();
             current.setPreviousElement(null);
             current = listHead;
-        }else{
-            if(current.getNextElement() == null){
+        } else {
+            if (current.getNextElement() == null) {
                 current = current.getPreviousElement();
                 current.setNextElement(null);
                 listTail = current;
-            }else{
+            } else {
                 ListElement tempNext = current.getNextElement();
                 current = current.getPreviousElement();
                 current.setNextElement(tempNext);
@@ -111,11 +111,11 @@ public class List {
     }
 
     //returns true if provided Position already in use
-    public boolean isIntersecting(XY position){
+    public boolean isIntersecting(XY position) {
         current = listHead;
-        while (current != null){
+        while (current != null) {
             Entity helper = (Entity) current.getData();
-            if(helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX()){
+            if (helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX()) {
                 return true;
             }
             current = current.getNextElement();
@@ -125,15 +125,15 @@ public class List {
     }
 
     //returns intersecting Object in case it's not the same type
-    public Entity getIntersectingObject(XY position, Entity currentEntity){
+    public Entity getIntersectingObject(XY position, Entity currentEntity) {
         current = listHead;
-        while (current != null){
+        while (current != null) {
             Entity helper = (Entity) current.getData();
-            if(currentEntity != null) {
+            if (currentEntity != null) {
                 if (helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX() && helper.getEntityType() != currentEntity.getEntityType()) {
                     return helper;
                 }
-            }else{
+            } else {
                 if (helper.getPosition().getY() == position.getY() && helper.getPosition().getX() == position.getX()) {
                     return helper;
                 }
@@ -145,12 +145,12 @@ public class List {
     }
 
     //returns Entity from position in list
-    public Entity getEntityAtPosition(int positionInList){
-        if(!isEmpty()){
+    public Entity getEntityAtPosition(int positionInList) {
+        if (!isEmpty()) {
             current = listTail;
-            for(int currentPosition = this.getSize(); currentPosition > positionInList; currentPosition--){
-                if(current != null)
-                current = current.getPreviousElement();
+            for (int currentPosition = this.getSize(); currentPosition > positionInList; currentPosition--) {
+                if (current != null)
+                    current = current.getPreviousElement();
             }
             if (current != null) {
                 return (Entity) current.getData();
@@ -160,26 +160,45 @@ public class List {
         return null;
     }
 
-    public Squirrel[] getSquirrelsInList(){
-        Squirrel [] container = new Squirrel[getSize()];
+    //returns Array of Squirrel existing inGame
+    public Squirrel[] getSquirrelsInList() {
+        Squirrel[] container = new Squirrel[getSize()];
         current = listHead;
         Entity helper;
         int counter = 0;
-        while(current != null){
+        while (current != null) {
             helper = (Entity) current.getData();
-            if(helper.getEntityType() == EntityTypes.BotSquirrel || helper.getEntityType() == EntityTypes.HandOperatedMasterSquirrel || helper.getEntityType() == EntityTypes.MiniSquirrel){
+            if (helper.getEntityType() == EntityTypes.BotSquirrel || helper.getEntityType() == EntityTypes.HandOperatedMasterSquirrel || helper.getEntityType() == EntityTypes.MiniSquirrel) {
                 container[counter++] = (Squirrel) helper;
             }
             current = current.getNextElement();
         }
-        Squirrel [] squirrels = new Squirrel[counter];
+        Squirrel[] squirrels = new Squirrel[counter];
         System.arraycopy(container, 0, squirrels, 0, squirrels.length);
         current = listTail;
         return squirrels;
     }
 
+    public Entity[] getFood() {
+        Entity[] container = new Entity[getSize()];
+        current = listHead;
+        Entity helper;
+        int counter = 0;
+        while (current != null) {
+            helper = (Entity) current.getData();
+            if (helper.getEntityType() == EntityTypes.GoodPlant || helper.getEntityType() == EntityTypes.GoodBeast) {
+                container[counter++] = helper;
+            }
+            current = current.getNextElement();
+        }
+        Entity[] food = new Entity[counter];
+        System.arraycopy(container, 0, food, 0, food.length);
+        current = listTail;
+        return food;
+    }
+
     //checks listHead
-    private boolean isEmpty(){
+    private boolean isEmpty() {
         return listHead == null;
     }
 

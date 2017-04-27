@@ -10,24 +10,11 @@ public abstract class MasterSquirrel extends Squirrel {
     }
 
 
-    protected void eat(XY position, EntityContext context){
-        Entity intersectingEntity = context.getEntitySet().getSet().getIntersectingObject(position,this);
-        this.updateEnergy(intersectingEntity.getEnergy());
-        context.killAndReplace(intersectingEntity);
+    public boolean isParent(MiniSquirrel miniSquirrel){
+        return false;
     }
 
-    protected void whatToDo(EntityContext context, XY moveDirection){
-        XY temp = this.getPosition().setNewPosition(this.getPosition(),moveDirection);
-        EntityTypes intersectingEntity = context.getEntitySet().getSet().getIntersectingObject(temp,null).getEntityType();
-        if(intersectingEntity == EntityTypes.Wall){
-            suspensionCounter = 3;
-        }else if(intersectingEntity == EntityTypes.BadBeast){
 
-        }else{
-            this.updatePosition(temp);
-            eat(temp, context);
-        }
-    }
 
 
     public String toString(){

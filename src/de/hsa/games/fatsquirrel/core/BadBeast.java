@@ -43,10 +43,8 @@ public class BadBeast extends Movable {
         else if (intersectingEntity instanceof Squirrel) {
             updatePosition(intersectingEntity.getPosition());
             bite(intersectingEntity);
-            //if something else is at position
+        //if something else is at position
         } else runAround(context);
-
-
     }
 
     private void bite(Entity entity) {
