@@ -1,6 +1,6 @@
 package de.hsa.games.fatsquirrel.core;
 
-enum EntityTypes {BadBeast, BadPlant, GoodBeast, GoodPlant, MasterSquirrel, MiniSquirrel, BotSquirrel, HandOperatedMasterSquirrel, Wall}
+import de.hsa.games.fatsquirrel.util.XY;
 
 public abstract class Entity {
 

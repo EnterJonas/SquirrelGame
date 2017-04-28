@@ -1,5 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
+import de.hsa.games.fatsquirrel.util.List;
+import de.hsa.games.fatsquirrel.util.XY;
+
 public class EntitySet {
 
     private List list;

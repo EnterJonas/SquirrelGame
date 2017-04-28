@@ -1,5 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
+import de.hsa.games.fatsquirrel.interfaces.BoardView;
+import de.hsa.games.fatsquirrel.util.XY;
+
 public abstract class Game {
 
     protected State state;

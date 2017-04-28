@@ -1,6 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
 
+import de.hsa.games.fatsquirrel.util.XY;
+
 public class BadPlant extends Entity{
 
     private static final int ENERGY = -100;

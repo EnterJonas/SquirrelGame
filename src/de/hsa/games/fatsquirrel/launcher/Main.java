@@ -1,5 +1,9 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.launcher;
 
+
+import de.hsa.games.fatsquirrel.core.FlattenedBoard;
+import de.hsa.games.fatsquirrel.core.GameImpl;
+import de.hsa.games.fatsquirrel.core.State;
 
 public class Main {
 

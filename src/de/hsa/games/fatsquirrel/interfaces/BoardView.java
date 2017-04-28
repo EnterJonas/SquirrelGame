@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.interfaces;
 
 
 public interface BoardView {

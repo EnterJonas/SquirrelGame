@@ -1,4 +1,9 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.util;
+
+import de.hsa.games.fatsquirrel.core.Entity;
+import de.hsa.games.fatsquirrel.core.EntityTypes;
+import de.hsa.games.fatsquirrel.core.Squirrel;
+import de.hsa.games.fatsquirrel.util.XY;
 
 import java.util.Arrays;
 

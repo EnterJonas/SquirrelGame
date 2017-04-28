@@ -1,6 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
 
+import de.hsa.games.fatsquirrel.interfaces.ConsoleUI;
+
 public class GameImpl extends Game {
 
     public GameImpl(State state){
