@@ -1,5 +1,10 @@
 package de.hsa.games.fatsquirrel.core;
 
+import de.hsa.games.fatsquirrel.core.entities.Entity;
+import de.hsa.games.fatsquirrel.core.entities.EntitySet;
+import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.MiniSquirrel;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.Squirrel;
 import de.hsa.games.fatsquirrel.interfaces.BoardView;
 import de.hsa.games.fatsquirrel.interfaces.EntityContext;
 import de.hsa.games.fatsquirrel.util.XY;
@@ -42,7 +47,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             createWalls(emptyWorld);
         }
 
-        //creates Wall Entities for empty World
+        //creates Wall entities for empty World
         private void createWalls(Entity[][] emptyWorld) {
             int position = entitySet.getSet().getSize();
             while (position > 0) {
@@ -114,7 +119,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
 //            }
 //        }
 
-        //places Entities at their current position in world
+        //places entities at their current position in world
         private void updateWorld() {
             initWorld = cloneWorld(emptyWorld);
             populateWorld(initWorld);
@@ -139,7 +144,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
         board = new Board();
     }
 
-    //returns nearest Squirrel
+    //returns nearest squirrel
     public Squirrel nearestPlayerEntity(XY positionOfEntityLookingForPlayer) {
         Squirrel[] squirrels = getBoard().getEntitySet().getSet().getSquirrelsInList();
         Squirrel tempSquirrel;

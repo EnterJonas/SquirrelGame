@@ -1,6 +1,9 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.core.entities.movable;
 
 
+import de.hsa.games.fatsquirrel.core.entities.Entity;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.Squirrel;
+import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
 import de.hsa.games.fatsquirrel.interfaces.EntityContext;
 import de.hsa.games.fatsquirrel.util.XY;
 
@@ -44,7 +47,7 @@ public class GoodBeast extends Movable {
         if (!(context.getEntitySet().getSet().isIntersecting(temp3))) {
             updatePosition(temp3);
         }
-        //if GoodBeast somehow has same location as Squirrel remove and replace
+        //if GoodBeast somehow has same location as squirrel remove and replace
         else if (intersectingEntity instanceof Squirrel) {
             context.killAndReplace(this);
         }

@@ -1,9 +1,8 @@
 package de.hsa.games.fatsquirrel.util;
 
-import de.hsa.games.fatsquirrel.core.Entity;
-import de.hsa.games.fatsquirrel.core.EntityTypes;
-import de.hsa.games.fatsquirrel.core.Squirrel;
-import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.core.entities.Entity;
+import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.Squirrel;
 
 import java.util.Arrays;
 
@@ -166,7 +165,7 @@ public class List {
         return null;
     }
 
-    //returns Array of Squirrel existing inGame
+    //returns Array of squirrel existing inGame
     public Squirrel[] getSquirrelsInList() {
         Squirrel[] container = new Squirrel[getSize()];
         current = listHead;
@@ -211,7 +210,7 @@ public class List {
     @Override
     public String toString() {
         if (isEmpty()) {
-            return "No Entities in World!";
+            return "No entities in World!";
         } else {
             ListElement helper = listHead;
             int currentPosition = 0;

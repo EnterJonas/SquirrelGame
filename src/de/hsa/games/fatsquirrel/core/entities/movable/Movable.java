@@ -1,5 +1,8 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.core.entities.movable;
 
+import de.hsa.games.fatsquirrel.core.entities.Entity;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.Squirrel;
+import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
 import de.hsa.games.fatsquirrel.interfaces.EntityContext;
 import de.hsa.games.fatsquirrel.util.XY;
 

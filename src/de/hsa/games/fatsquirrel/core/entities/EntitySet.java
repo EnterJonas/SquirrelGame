@@ -1,5 +1,13 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.core.entities;
 
+import de.hsa.games.fatsquirrel.core.entities.movable.BadBeast;
+import de.hsa.games.fatsquirrel.core.entities.movable.GoodBeast;
+import de.hsa.games.fatsquirrel.core.entities.nonmovable.BadPlant;
+import de.hsa.games.fatsquirrel.core.entities.nonmovable.GoodPlant;
+import de.hsa.games.fatsquirrel.core.entities.nonmovable.Wall;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.BotSquirrel;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.HandOperatedMasterSquirrel;
+import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.MiniSquirrel;
 import de.hsa.games.fatsquirrel.util.List;
 import de.hsa.games.fatsquirrel.util.XY;
 

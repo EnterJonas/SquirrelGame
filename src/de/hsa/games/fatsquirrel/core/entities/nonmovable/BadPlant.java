@@ -1,9 +1,11 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.core.entities.nonmovable;
 
 
+import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
+import de.hsa.games.fatsquirrel.core.entities.Entity;
 import de.hsa.games.fatsquirrel.util.XY;
 
-public class BadPlant extends Entity{
+public class BadPlant extends Entity {
 
     private static final int ENERGY = -100;
 

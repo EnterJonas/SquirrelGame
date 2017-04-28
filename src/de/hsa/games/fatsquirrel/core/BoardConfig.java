@@ -1,6 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
 
+import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
+
 public class BoardConfig {
 
     private String amountWall = "50";
@@ -22,7 +24,7 @@ public class BoardConfig {
         calcAmountEntities();
     }
 
-    //returns String Array with amount and Type of initial Entities
+    //returns String Array with amount and Type of initial entities
     public String[][] getEntityListing() {
         return new String[][]{{EntityTypes.Wall.toString(), amountWall},
                 {EntityTypes.BadPlant.toString(), amountBadPlant},
@@ -43,14 +45,14 @@ public class BoardConfig {
         return pitchHeight;
     }
 
-    //calculates amount of initial Entities
+    //calculates amount of initial entities
     private void calcAmountEntities(){
         for(int i = 0; i < getEntityListing().length; i++){
             amountEntities += Integer.parseInt(getEntityListing()[i][1]);
         }
     }
 
-    //returns amount of initial Entities
+    //returns amount of initial entities
     public int getAmountEntities(){
         return amountEntities;
     }
