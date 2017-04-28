@@ -59,6 +59,7 @@ public class List {
         if (current == null) {
             current = new ListElement(null, null, data);
             listHead = current;
+            listTail = listHead;
         } else {
             if (current.getNextElement() == null) {
                 current.setNextElement(new ListElement(null, current, data));

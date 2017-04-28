@@ -208,4 +208,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
         getBoard().createNewEntity(entityToKill.getEntityType());
     }
 
+    public void giveBirth(MiniSquirrel miniSquirrel){
+        getBoard().getEntitySet().addEntity(miniSquirrel.getEntityType(), miniSquirrel.getEnergy(), miniSquirrel.getPosition());
+    }
+
 }

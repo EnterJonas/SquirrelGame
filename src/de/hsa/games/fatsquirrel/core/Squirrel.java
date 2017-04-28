@@ -12,8 +12,12 @@ public abstract class Squirrel extends Movable {
     }
 
     protected boolean isFoodAround(EntityContext context, int VISION) {
-        nextFood = context.nearestPlayerEntity(this.getPosition());
+        nextFood = context.nearestFood(this.getPosition());
         return nextFood.getPosition().getSteps(this.getPosition()) <= VISION;
+    }
+
+    protected Entity getNextFood(){
+        return this.nextFood;
     }
 
     protected void eat(XY position, EntityContext context) {
@@ -23,15 +27,17 @@ public abstract class Squirrel extends Movable {
     }
 
     protected void whatToDo(EntityContext context, XY moveDirection){
-        EntityTypes intersectingEntity = context.getEntitySet().getSet().getIntersectingObject(moveDirection,null).getEntityType();
-        if(intersectingEntity == EntityTypes.Wall){
-            updateSuspensionCounter(3);
-            this.hasBeenSuspended = true;
-        }else if(intersectingEntity == EntityTypes.BadBeast){
-            this.updatePosition(moveDirection);
-        }else{
-            this.updatePosition(moveDirection);
-            eat(moveDirection, context);
+        if(context.getEntitySet().getSet().isIntersecting(moveDirection)) {
+            EntityTypes intersectingEntity = context.getEntitySet().getSet().getIntersectingObject(moveDirection, null).getEntityType();
+            if (intersectingEntity == EntityTypes.Wall) {
+                updateSuspensionCounter(3);
+                this.hasBeenSuspended = true;
+            } else if (intersectingEntity == EntityTypes.BadBeast) {
+                this.updatePosition(moveDirection);
+            } else {
+                this.updatePosition(moveDirection);
+                eat(moveDirection, context);
+            }
         }
     }
 
@@ -41,6 +47,14 @@ public abstract class Squirrel extends Movable {
 
     protected void updateSuspensionCounter(int deltaSuspension){
         this.suspensionCounter += deltaSuspension;
+    }
+
+    protected boolean hasBeenSuspended(){
+        return hasBeenSuspended;
+    }
+
+    protected void updateSuspentionState(){
+        this.hasBeenSuspended = false;
     }
 
 

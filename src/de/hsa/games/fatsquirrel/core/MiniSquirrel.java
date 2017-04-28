@@ -13,21 +13,32 @@ public class MiniSquirrel extends Squirrel {
     @Override
     public void nextStep(EntityContext context, XY moveDirection) {
         updateEnergy(-1);
-        XY temp;
-
-        //has been suspended boolean is used to make the miniSquirrel "unstuck" from walls..
-        if(isFoodAround(context, VISION) && !hasBeenSuspended){
-            temp = this.getPosition().setNewPosition(this.getPosition(), this.getPosition().createMovementVector(getNextSquirrel().getPosition().createVector(this.getPosition())));
-            whatToDo(context, temp);
-        }else if (isFoodAround(context,VISION) && hasBeenSuspended){
-            runAround(context);
-            hasBeenSuspended = false;
-        }
-        else{
+        if(isFoodAround(context, VISION)){
+            getFood(context);
+        }else {
             runAround(context);
         }
     }
 
+    private void getFood(EntityContext context) {
+        XY temp = this.getPosition().setNewPosition(this.getPosition(), this.getPosition().createMovementVector(getNextFood().getPosition().createVector(this.getPosition())));
+        Entity intersectingEntity = context.getEntitySet().getSet().getIntersectingObject(temp, this);
+        //if nothing is intersecting move to temp position
+        if (!(context.getEntitySet().getSet().isIntersecting(temp))) {
+            updatePosition(temp);
+        }
+        //if food is at Position
+        else if (intersectingEntity.getEntityType() == EntityTypes.GoodBeast || intersectingEntity.getEntityType() == EntityTypes.GoodPlant) {
+            context.killAndReplace(intersectingEntity);
+            updatePosition(intersectingEntity.getPosition());
+            updateEnergy(intersectingEntity.getEnergy());
+            //if something else is at position
+        } else runAround(context);
+    }
+
+    public String toString(){
+        return "M";
+    }
 
 
 

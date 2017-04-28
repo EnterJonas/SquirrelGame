@@ -21,6 +21,11 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
             XY temp = this.getPosition().setNewPosition(this.getPosition(), moveDirection);
             whatToDo(context,temp);
         }
+        if(this.getEnergy() >= 1200){
+            giveBirthToMiniSquirrel(100,context);
+            this.updateEnergy(-200);
+        }
+
     }
 
 

@@ -9,6 +9,7 @@ public interface EntityContext {
     EntitySet getEntitySet();
     void killAndReplace(Entity entityToKill);
     void kill(Entity entityToKill);
+    void giveBirth(MiniSquirrel miniSquirrel);
 
 
 
