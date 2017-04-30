@@ -16,7 +16,6 @@ public class BoardConfig {
 
     private int amountEntities = 0;
 
-
     public BoardConfig() {
         getEntityListing();
         calcAmountEntities();

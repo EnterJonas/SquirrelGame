@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.interfaces;
+package de.hsa.games.fatsquirrel.core;
 
 
 import de.hsa.games.fatsquirrel.core.Entity;
@@ -17,13 +17,7 @@ public interface EntityContext {
     void tryMove(MiniSquirrel miniSquirrel, XY moveDirection);
     void tryMove(MasterSquirrel masterSquirrel, XY moveDirection);
 
-
-    EntitySet getEntitySet();
     void killAndReplace(Entity entityToKill);
     void kill(Entity entityToKill);
-    void giveBirth(XY miniSquirrel, int parentID);
-
-
-
-
+    void giveBirth(XY position, int parentID);
 }

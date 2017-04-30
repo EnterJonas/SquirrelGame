@@ -1,7 +1,7 @@
 package de.hsa.games.fatsquirrel.core;
 
 
-import de.hsa.games.fatsquirrel.interfaces.ConsoleUI;
+import de.hsa.games.fatsquirrel.cmd.ConsoleUI;
 
 public class GameImpl extends Game {
 

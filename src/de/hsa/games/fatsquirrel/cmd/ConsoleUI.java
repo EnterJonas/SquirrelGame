@@ -1,6 +1,5 @@
-package de.hsa.games.fatsquirrel.interfaces;
+package de.hsa.games.fatsquirrel.cmd;
 
-import de.hsa.games.fatsquirrel.interfaces.UI;
 import de.hsa.games.fatsquirrel.util.XY;
 
 import java.util.Scanner;

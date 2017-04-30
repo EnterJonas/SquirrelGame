@@ -47,10 +47,6 @@ public class EntitySet {
         }
     }
 
-    public void removeEntity(Entity removeEntity){
-        list.remove(removeEntity);
-    }
-
     public void print() {
         System.out.print(list.toString());
     }
