@@ -12,9 +12,6 @@ import de.hsa.games.fatsquirrel.util.XY;
 
 public interface EntityContext {
 
-    Squirrel nearestPlayerEntity(XY positionOfEntityLookingForPlayer);
-    Entity nearestFood(XY positionOfEntityLookingForFood);
-
     void tryMove(GoodBeast goodBeast, XY moveDirection);
     void tryMove(BadBeast badBeast, XY moveDirection);
     void tryMove(MiniSquirrel miniSquirrel, XY moveDirection);

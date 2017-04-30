@@ -15,26 +15,17 @@ public abstract class MasterSquirrel extends Squirrel {
         amountPlayerEntities++;
     }
 
-    public boolean isParent(Entity entity){
-
-        /**
-         * needs implementation
-         */
-        return false;
-
+    public boolean isParent(MiniSquirrel miniSquirrel){
+        return miniSquirrel.getParentID() == this.getParentID();
     }
 
     public int getParentID(){
         return this.parentID;
     }
 
-
-
-
     public void createNewMiniSquirrel(EntityContext context){
         context.giveBirth(this.getPosition(), this.getParentID());
     }
-
 
     public String toString(){
         return "S";

@@ -165,41 +165,22 @@ public class List {
         return null;
     }
 
-    //returns Array of squirrel existing inGame
-    public Squirrel[] getSquirrelsInList() {
-        Squirrel[] container = new Squirrel[getSize()];
-        current = listHead;
-        Entity helper;
-        int counter = 0;
-        while (current != null) {
-            helper = (Entity) current.getData();
-            if (helper.getEntityType() == EntityTypes.BotSquirrel || helper.getEntityType() == EntityTypes.HandOperatedMasterSquirrel || helper.getEntityType() == EntityTypes.MiniSquirrel) {
-                container[counter++] = (Squirrel) helper;
-            }
-            current = current.getNextElement();
-        }
-        Squirrel[] squirrels = new Squirrel[counter];
-        System.arraycopy(container, 0, squirrels, 0, squirrels.length);
-        current = listTail;
-        return squirrels;
-    }
-
-    public Entity[] getFood() {
+    public Entity[] getEntityList(EntityTypes no1, EntityTypes no2, EntityTypes no3){
         Entity[] container = new Entity[getSize()];
         current = listHead;
         Entity helper;
         int counter = 0;
-        while (current != null) {
+        while (current != null){
             helper = (Entity) current.getData();
-            if (helper.getEntityType() == EntityTypes.GoodPlant || helper.getEntityType() == EntityTypes.GoodBeast) {
+            if(helper.getEntityType() == no1 || helper.getEntityType() == no2 || helper.getEntityType() == no3){
                 container[counter++] = helper;
             }
             current = current.getNextElement();
         }
-        Entity[] food = new Entity[counter];
-        System.arraycopy(container, 0, food, 0, food.length);
+        Entity [] entities = new Entity[counter];
+        System.arraycopy(container, 0, entities, 0, entities.length);
         current = listTail;
-        return food;
+        return entities;
     }
 
     //checks listHead

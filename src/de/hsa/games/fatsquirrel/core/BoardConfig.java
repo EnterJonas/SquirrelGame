@@ -5,7 +5,7 @@ public class BoardConfig {
 
     private String amountWall = "0";
     private String amountBadPlant = "0";
-    private String amountGoodPlant = "20";
+    private String amountGoodPlant = "0";
     private String amountGoodBeast = "1";
     private String amountBadBeast = "0";
     private String amountHandOperatedMasterSquirrel = "1";
