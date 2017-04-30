@@ -1,7 +1,6 @@
-package de.hsa.games.fatsquirrel.core.entities.movable.squirrel;
+package de.hsa.games.fatsquirrel.core;
 
 
-import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
 import de.hsa.games.fatsquirrel.interfaces.EntityContext;
 import de.hsa.games.fatsquirrel.util.XY;
 
@@ -14,8 +13,9 @@ public class BotSquirrel extends MasterSquirrel {
     }
 
     @Override
-    public void nextStep(EntityContext context, XY moveDirection) {
+    public void nextStep(EntityContext context) {
 
     }
+
 
 }

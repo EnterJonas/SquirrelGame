@@ -1,13 +1,5 @@
-package de.hsa.games.fatsquirrel.core.entities;
+package de.hsa.games.fatsquirrel.core;
 
-import de.hsa.games.fatsquirrel.core.entities.movable.BadBeast;
-import de.hsa.games.fatsquirrel.core.entities.movable.GoodBeast;
-import de.hsa.games.fatsquirrel.core.entities.nonmovable.BadPlant;
-import de.hsa.games.fatsquirrel.core.entities.nonmovable.GoodPlant;
-import de.hsa.games.fatsquirrel.core.entities.nonmovable.Wall;
-import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.BotSquirrel;
-import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.HandOperatedMasterSquirrel;
-import de.hsa.games.fatsquirrel.core.entities.movable.squirrel.MiniSquirrel;
 import de.hsa.games.fatsquirrel.util.List;
 import de.hsa.games.fatsquirrel.util.XY;
 
@@ -23,7 +15,7 @@ public class EntitySet {
         return list;
     }
 
-    public void addEntity(EntityTypes entityType, int energy, XY position) {
+    public void addEntity(EntityTypes entityType, int energy, XY position,int parentID) {
         switch (entityType) {
             case BadBeast:
                 list.add(new BadBeast(entityType, energy, position));
@@ -47,7 +39,7 @@ public class EntitySet {
                 list.add(new HandOperatedMasterSquirrel(entityType, energy, position));
                 break;
             case MiniSquirrel:
-                list.add(new MiniSquirrel(entityType, energy, position));
+                list.add(new MiniSquirrel(entityType, energy, position, parentID));
                 break;
             case Wall:
                 list.add(new Wall(entityType, energy, position));

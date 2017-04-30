@@ -1,15 +1,13 @@
 package de.hsa.games.fatsquirrel.core;
 
 
-import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
-
 public class BoardConfig {
 
-    private String amountWall = "50";
-    private String amountBadPlant = "10";
-    private String amountGoodPlant = "10";
-    private String amountGoodBeast = "10";
-    private String amountBadBeast = "10";
+    private String amountWall = "0";
+    private String amountBadPlant = "0";
+    private String amountGoodPlant = "20";
+    private String amountGoodBeast = "1";
+    private String amountBadBeast = "0";
     private String amountHandOperatedMasterSquirrel = "1";
     private String amountBotMasterSquirrel = "0";
 

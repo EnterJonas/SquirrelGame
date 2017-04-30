@@ -1,8 +1,5 @@
 package de.hsa.games.fatsquirrel.core;
 
-import de.hsa.games.fatsquirrel.core.entities.Entity;
-import de.hsa.games.fatsquirrel.core.entities.EntityTypes;
-import de.hsa.games.fatsquirrel.core.entities.movable.Movable;
 import de.hsa.games.fatsquirrel.interfaces.BoardView;
 import de.hsa.games.fatsquirrel.util.XY;
 
@@ -38,9 +35,11 @@ public abstract class Game {
         while (position > 1) {
             if (current instanceof Movable) {
                 if (current.getEntityType() == EntityTypes.HandOperatedMasterSquirrel) {
-                    ((Movable) current).nextStep(state.flattenedBoard(), moveDirection);
+                    ((HandOperatedMasterSquirrel)current).setInput(moveDirection);
+                    ((Movable) current).nextStep(state.flattenedBoard());
+
                 } else {
-                    ((Movable) current).nextStep(state.flattenedBoard(), null);
+                    ((Movable) current).nextStep(state.flattenedBoard());
 
                 }
             }

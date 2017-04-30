@@ -12,21 +12,15 @@ public class XY {
         this.y = y;
     }
 
-    public XY setNewPosition(XY currentLocation, XY vector) {
-        return new XY(currentLocation.getY() + vector.getY(), currentLocation.getX()+vector.getX());
+    public XY setNewPosition( XY vector) {
+        return new XY(this.getY() + vector.getY(), this.getX()+vector.getX());
     }
 
-    public XY getNewPosition(XY currentLocation) {
+    public XY getNewPosition() {
         Random random = new Random();
-        int currentY = currentLocation.getY();
-        int currentX = currentLocation.getX();
+        int currentY = this.getY();
+        int currentX = this.getX();
         return new XY(currentY + random.nextInt(1 + 1 + 1) - 1, currentX + random.nextInt(1 + 1 + 1) - 1);
-    }
-
-    //returns random moveDirection for (Good- and BadBeast as well as for Mini- and BotSquirrel)
-    public XY getMoveDirection() {
-        Random random = new Random();
-        return new XY(random.nextInt(1 + 1 + 1) - 1, random.nextInt(1 + 1 + 1) - 1);
     }
 
     //subtracts one position from another
