@@ -28,7 +28,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             for (int y = 0; y < emptyWorld.length; y++) {
                 for (int x = 0; x < emptyWorld[y].length; x++) {
                     if (y == 0 || x == 0 || y == (emptyWorld.length - 1) || x == (emptyWorld[y].length - 1)) {
-                        entitySet.addEntity(EntityTypes.Wall, 0, new XY(y, x), 0);
+                        entitySet.addNewEntity(EntityTypes.Wall, 0, new XY(y, x), 0);
                     }
                 }
             }
@@ -70,12 +70,13 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 int randomX = random.nextInt((initWorld[0].length - 2)) + 1;
                 XY randomPosition = new XY(randomY, randomX);
                 if (!entitySet.getSet().isIntersecting(randomPosition)) {
-                    entitySet.addEntity(entityType, 0, new XY(randomY, randomX), 0);
+                    entitySet.addNewEntity(entityType, 0, new XY(randomY, randomX), 0);
                 } else {
                     i--;
                 }
             }
         }
+
 
         //writes world array
         private void populateWorld(Entity[][] world) {
@@ -139,7 +140,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     //returns nearest squirrel
     public Entity nearestEntity(XY positionOfEntityLookingForPlayer, EntityTypes no1, EntityTypes no2, EntityTypes no3) {
-        Entity[] entities = getBoard().getEntitySet().getSet().getEntityList(no1,no2,no3);
+        Entity[] entities = getBoard().getEntitySet().getSet().getEntityList(no1, no2, no3);
         Entity temp;
         for (int i = 1; i < entities.length; i++) {
             for (int j = i; j > 0; j--) {
@@ -215,14 +216,14 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
 
         //position of nextSquirrel
-        XY nextFood = nearestEntity(miniSquirrel.getPosition(),EntityTypes.GoodBeast, EntityTypes.GoodPlant, null).getPosition();
-        XY nextSquirrel = nearestEntity(miniSquirrel.getPosition(),EntityTypes.BotSquirrel, EntityTypes.HandOperatedMasterSquirrel, null).getPosition();
+        XY nextFood = nearestEntity(miniSquirrel.getPosition(), EntityTypes.GoodBeast, EntityTypes.GoodPlant, null).getPosition();
+        XY nextSquirrel = nearestEntity(miniSquirrel.getPosition(), EntityTypes.BotSquirrel, EntityTypes.HandOperatedMasterSquirrel, null).getPosition();
 
         //if nextSquirrel is in range of miniSquirrel's vision
         if (nextFood.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()) {
             //update moveDirection to collect food
             moveDirection = miniSquirrel.getPosition().setNewPosition(miniSquirrel.getPosition().createMovementVector(nextFood.createVector(miniSquirrel.getPosition())));
-        }else if(nextSquirrel.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()){
+        } else if (nextSquirrel.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()) {
             moveDirection = miniSquirrel.getPosition().setNewPosition(miniSquirrel.getPosition().createMovementVector(nextSquirrel.createVector(miniSquirrel.getPosition())));
         }
 
@@ -243,8 +244,10 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 ((BadBeast) intersectingEntity).setAmountBites(-1);
             } else if (type == EntityTypes.BotSquirrel || type == EntityTypes.HandOperatedMasterSquirrel) {
                 if (((MasterSquirrel) intersectingEntity).isParent(miniSquirrel)) {
+                    if(miniSquirrel.getTimer() == 2){
                     intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
                     kill(miniSquirrel);
+                    }else miniSquirrel.updateTimer();
                 } else {
                     kill(miniSquirrel);
                 }
@@ -281,8 +284,10 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 }
             } else if (type == EntityTypes.MiniSquirrel) {
                 if (masterSquirrel.isParent((MiniSquirrel) intersectingEntity)) {
-                    masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
-                    kill(intersectingEntity);
+                    if(((MiniSquirrel) intersectingEntity).getTimer() == 2) {
+                        masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
+                        kill(intersectingEntity);
+                    }else ((MiniSquirrel) intersectingEntity).updateTimer();
                 } else {
                     kill(intersectingEntity);
                 }
@@ -316,8 +321,13 @@ public class FlattenedBoard implements EntityContext, BoardView {
         getBoard().createNewEntity(entityToKill.getEntityType());
     }
 
-    public void giveBirth(XY position, int parentID) {
-        getBoard().entitySet.addEntity(EntityTypes.MiniSquirrel, 100, position, parentID);
+    public void giveBirth(XY position, int energy, int parentID) {
+        getBoard().entitySet.addNewEntity(EntityTypes.MiniSquirrel, energy, position, parentID);
+    }
+
+    public void addEntity(Entity entity) {
+        getBoard().getEntitySet().addEntity(entity);
+
     }
 
 }

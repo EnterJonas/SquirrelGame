@@ -22,7 +22,7 @@ public abstract class MasterSquirrel extends Squirrel {
     }
 
     public void createNewMiniSquirrel(EntityContext context){
-        context.giveBirth(this.getPosition(), this.getParentID());
+        context.giveBirth(this.getPosition(), 199, this.getParentID());
     }
 
     public String toString(){

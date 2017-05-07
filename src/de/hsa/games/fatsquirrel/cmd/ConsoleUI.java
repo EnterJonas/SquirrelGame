@@ -1,32 +1,47 @@
 package de.hsa.games.fatsquirrel.cmd;
 
+import de.hsa.games.fatsquirrel.core.BoardView;
 import de.hsa.games.fatsquirrel.util.XY;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class ConsoleUI implements UI {
+public class ConsoleUI implements UI{
 
-    private Scanner scanner = new Scanner(System.in);
+    CommandScanner commandScanner=new CommandScanner(GameCommandType.values(),new BufferedReader(new InputStreamReader(System.in)));
 
     @Override
-    public XY getCommand() {
-        char input = scanner.next().charAt(0);
-        switch (input) {
-            case 'w':
-                return  new XY(-1, 0);
-            case 's':
-                return  new XY(1, 0);
-            case 'a':
-                return  new XY(0, -1);
-            case 'd':
-                return  new XY(0, 1);
-            default:
-                return  new XY(0, 0);
+    public void render(BoardView view) {
+        for (int y = 0; y < view.getWorld().length; y++) {
+            for (int x = 0; x < view.getWorld()[y].length; x++) {
+                if (view.getWorld()[y][x] != null)
+                    System.out.print(view.getWorld()[y][x]);
+                else System.out.print(" ");
+            }
+            System.out.print('\n');
         }
     }
 
     @Override
-    public void render() {
+    public Command getCommand() {
+        try {
+            return commandScanner.next();
+        } catch (ScanException e) {
+			//e.printStackTrace();
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.err.println("FEHLER: falsches Argument");
+        }
+        return null;
+    }
+
+    @Override
+    public void message(String msg) {
 
     }
+
 }

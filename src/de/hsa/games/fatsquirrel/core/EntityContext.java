@@ -19,5 +19,5 @@ public interface EntityContext {
 
     void killAndReplace(Entity entityToKill);
     void kill(Entity entityToKill);
-    void giveBirth(XY position, int parentID);
+    void giveBirth(XY position,int energy, int parentID);
 }

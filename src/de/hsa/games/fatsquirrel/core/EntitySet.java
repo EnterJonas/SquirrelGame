@@ -15,7 +15,11 @@ public class EntitySet {
         return list;
     }
 
-    public void addEntity(EntityTypes entityType, int energy, XY position,int parentID) {
+    public void addEntity(Entity entity){
+        list.add(entity);
+    }
+
+    public void addNewEntity(EntityTypes entityType, int energy, XY position, int parentID) {
         switch (entityType) {
             case BadBeast:
                 list.add(new BadBeast(entityType, energy, position));

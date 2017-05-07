@@ -14,23 +14,23 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     @Override
     public void nextStep(EntityContext context) {
-        if(input != null){
+        if(getInput() != null){
             if(!isStunned()){
-                XY nextPosition = this.getPosition().setNewPosition(input);
-                input = null;
+                XY nextPosition = this.getPosition().setNewPosition(getInput());
+                setInput(null);
                 context.tryMove(this,nextPosition);
             }else{
                 setSuspensionCounter(-1);
             }
         }
-        if(this.getEnergy() >= 1200){
-            createNewMiniSquirrel(context);
-            this.updateEnergy(-200);
-        }
     }
 
     public void setInput(XY input){
         this.input = input;
+    }
+
+    public XY getInput(){
+        return this.input;
     }
 
 
