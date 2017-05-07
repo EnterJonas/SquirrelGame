@@ -62,24 +62,13 @@ public class GameImpl extends Game {
         try {
             method = processorClass.getMethod(commandType.name().toLowerCase(),
                     commandType.getParamTypes());
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
+        } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }
 
         try {
             method.invoke(this, castedParams);
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
+        } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
