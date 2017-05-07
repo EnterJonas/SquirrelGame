@@ -9,4 +9,5 @@ public interface UI {
     Command getCommand();
     void message(String msg);
 
+
 }
