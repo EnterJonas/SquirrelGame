@@ -2,7 +2,6 @@ package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.cmd.*;
 import de.hsa.games.fatsquirrel.util.XY;
-import de.hsa.games.fatsquirrel.core.HandOperatedMasterSquirrel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
