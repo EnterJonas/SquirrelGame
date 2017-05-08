@@ -2,11 +2,11 @@ package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
 
-public abstract class Squirrel extends Character {
+public abstract class Character extends Entity {
 
-    private int suspensionCounter = 0;
+    private int suspensionCounter;
 
-    public Squirrel(EntityTypes entityType, int energy, XY position) {
+    public Character(EntityTypes entityType, int energy, XY position) {
         super(entityType, energy, position);
     }
 
@@ -22,4 +22,7 @@ public abstract class Squirrel extends Character {
         this.suspensionCounter += amount;
     }
 
+
+    public abstract void nextStep(EntityContext context);
 }
+

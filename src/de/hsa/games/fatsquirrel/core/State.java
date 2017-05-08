@@ -16,8 +16,8 @@ public class State {
         int position = flattenedBoard().getEntitySet().getSet().getSize();
         Entity current = flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
         while (current.getEntityType() != EntityTypes.Wall) {
-            if(current instanceof Movable) {
-                ((Movable) current).nextStep(flattenedBoard());
+            if(current instanceof Character) {
+                ((Character) current).nextStep(flattenedBoard());
             }
             current = flattenedBoard().getEntitySet().getSet().getEntityAtPosition(--position);
         }
