@@ -1,12 +1,10 @@
 package de.hsa.games.fatsquirrel.cmd;
 
 import de.hsa.games.fatsquirrel.core.BoardView;
-import de.hsa.games.fatsquirrel.util.XY;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class ConsoleUI implements UI{
 
@@ -14,10 +12,10 @@ public class ConsoleUI implements UI{
 
     @Override
     public void render(BoardView view) {
-        for (int y = 0; y < view.getWorld().length; y++) {
-            for (int x = 0; x < view.getWorld()[y].length; x++) {
-                if (view.getWorld()[y][x] != null)
-                    System.out.print(view.getWorld()[y][x]);
+        for (int y = 0; y < view.getSize().getY(); y++) {
+            for (int x = 0; x < view.getSize().getX(); x++) {
+                if (view.getEntityType(y,x) != null)
+                    System.out.print(view.getEntityType(y,x).getSymbol());
                 else System.out.print(" ");
             }
             System.out.print('\n');

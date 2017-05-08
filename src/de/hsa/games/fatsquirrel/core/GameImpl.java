@@ -17,7 +17,7 @@ public class GameImpl extends Game {
     public GameImpl(State state) {
         super(state);
         this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1,1));
-        this.getState().flattenedBoard().addEntity(handOperatedMasterSquirrel);
+        this.getState().getBoard().addEntity(handOperatedMasterSquirrel);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class GameImpl extends Game {
         System.out.println("SPAWN_MINI");
         int miniEnergy = 199;
         if (handOperatedMasterSquirrel.getEnergy() > miniEnergy) {
-            this.getState().flattenedBoard().giveBirth(handOperatedMasterSquirrel.getPosition(), miniEnergy, handOperatedMasterSquirrel.getParentID());
+            //this.getState().flattenedBoard().giveBirth(handOperatedMasterSquirrel.getPosition(), miniEnergy, handOperatedMasterSquirrel.getParentID());
             handOperatedMasterSquirrel.updateEnergy(-miniEnergy);
         } else
             throw new NotEnoughEnergyException("Nicht genug Energie!");

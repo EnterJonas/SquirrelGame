@@ -6,176 +6,180 @@ import java.util.Random;
 
 public class FlattenedBoard implements EntityContext, BoardView {
 
-    private class Board {
-
-        private BoardConfig boardConfig;
-        private Entity[][] emptyWorld;
-        private Entity[][] initWorld;
-        private EntitySet entitySet;
-
-        //Board constructor
-        private Board() {
-            this.boardConfig = new BoardConfig();
-            this.emptyWorld = new Entity[boardConfig.getPitchHeight()][boardConfig.getPitchWidth()];
-            this.initWorld = new Entity[boardConfig.getPitchHeight()][boardConfig.getPitchWidth()];
-            this.entitySet = new EntitySet();
-            createNewWorld();
-            createInitWorld();
-        }
-
-        //creates empty World
-        private void createNewWorld() {
-            for (int y = 0; y < emptyWorld.length; y++) {
-                for (int x = 0; x < emptyWorld[y].length; x++) {
-                    if (y == 0 || x == 0 || y == (emptyWorld.length - 1) || x == (emptyWorld[y].length - 1)) {
-                        entitySet.addNewEntity(EntityTypes.Wall, 0, new XY(y, x), 0);
-                    }
-                }
-            }
-            String[][] listingCopy = boardConfig.getEntityListing().clone();
-            for (int w = 0; w < Integer.parseInt((listingCopy[0][1])); w++) {
-                createNewEntity(EntityTypes.valueOf(listingCopy[0][0]));
-            }
-
-            createWalls(emptyWorld);
-        }
-
-        //creates Wall entities for empty World
-        private void createWalls(Entity[][] emptyWorld) {
-            int position = entitySet.getSet().getSize();
-            while (position > 0) {
-                Entity current = entitySet.getSet().getEntityAtPosition(position--);
-                XY cP = current.getPosition(); //cP: currentPosition
-                emptyWorld[cP.getY()][cP.getX()] = current;
-            }
-        }
-
-        //creates populated World
-        private void createInitWorld() {
-            initWorld = cloneWorld(emptyWorld);
-            String[][] listingCopy = boardConfig.getEntityListing().clone();
-            for (int z = 1; z < listingCopy.length; z++) {
-                for (int w = 0; w < Integer.parseInt(listingCopy[z][1]); w++) {
-                    createNewEntity(EntityTypes.valueOf(listingCopy[z][0]));
-                }
-            }
-            populateWorld(initWorld);
-        }
-
-        //creates new Entity, if position not already in use
-        private void createNewEntity(EntityTypes entityType) {
-            Random random = new Random();
-            for (int i = 0; i < 1; i++) {
-                int randomY = random.nextInt((initWorld.length - 2)) + 1;
-                int randomX = random.nextInt((initWorld[0].length - 2)) + 1;
-                XY randomPosition = new XY(randomY, randomX);
-                if (!entitySet.getSet().isIntersecting(randomPosition)) {
-                    entitySet.addNewEntity(entityType, 0, new XY(randomY, randomX), 0);
-                } else {
-                    i--;
-                }
-            }
-        }
-
-
-        //writes world array
-        private void populateWorld(Entity[][] world) {
-            int position = entitySet.getSet().getSize();
-            Entity current = entitySet.getSet().getEntityAtPosition(position);
-            while (current.getEntityType() != EntityTypes.Wall) {
-                current = entitySet.getSet().getEntityAtPosition(position);
-                XY cP = current.getPosition(); //cP: currentPosition
-                world[cP.getY()][cP.getX()] = current;
-                position--;
-            }
-        }
-
-        //clones Worlds (2D-Entity-Arrays)
-        private Entity[][] cloneWorld(Entity[][] arrayToClone) {
-            Entity[][] clonedArray = new Entity[arrayToClone.length][arrayToClone[0].length];
-            for (int y = 0; y < emptyWorld.length; y++) {
-                for (int x = 0; x < emptyWorld[y].length; x++) {
-                    clonedArray[y][x] = arrayToClone[y][x];
-                }
-            }
-            return clonedArray;
-        }
-
-        //prints the world (for testing purpose only)
-//        private void printWorld() {
-//            for (int x = 0; x < initWorld.length; x++) {
-//                for (int y = 0; y < initWorld[x].length; y++) {
-//                    if (initWorld[x][y] != null)
-//                        System.out.print(initWorld[x][y]);
-//                    else System.out.print(" ");
+//    private class Board {
+//
+//        private BoardConfig boardConfig;
+//        private Entity[][] emptyWorld;
+//        private Entity[][] initWorld;
+//        private EntitySet entitySet;
+//
+//        //Board constructor
+//        private Board() {
+//            this.boardConfig = new BoardConfig();
+//            this.emptyWorld = new Entity[boardConfig.getPitchHeight()][boardConfig.getPitchWidth()];
+//            this.initWorld = new Entity[boardConfig.getPitchHeight()][boardConfig.getPitchWidth()];
+//            this.entitySet = new EntitySet();
+//            createNewWorld();
+//            createInitWorld();
+//        }
+//
+//        //creates empty World
+//        private void createNewWorld() {
+//            for (int y = 0; y < emptyWorld.length; y++) {
+//                for (int x = 0; x < emptyWorld[y].length; x++) {
+//                    if (y == 0 || x == 0 || y == (emptyWorld.length - 1) || x == (emptyWorld[y].length - 1)) {
+//                        entitySet.addNewEntity(EntityTypes.Wall, 0, new XY(y, x), 0);
+//                    }
 //                }
-//                System.out.print('\n');
+//            }
+//            String[][] listingCopy = boardConfig.getEntityListing().clone();
+//            for (int w = 0; w < Integer.parseInt((listingCopy[0][1])); w++) {
+//                createNewEntity(EntityTypes.valueOf(listingCopy[0][0]));
+//            }
+//
+//            createWalls(emptyWorld);
+//        }
+//
+//        //creates Wall entities for empty World
+//        private void createWalls(Entity[][] emptyWorld) {
+//            int position = entitySet.getSet().getSize();
+//            while (position > 0) {
+//                Entity current = entitySet.getSet().getEntityAtPosition(position--);
+//                XY cP = current.getPosition(); //cP: currentPosition
+//                emptyWorld[cP.getY()][cP.getX()] = current;
 //            }
 //        }
-
-        //places entities at their current position in world
-        private void updateWorld() {
-            initWorld = cloneWorld(emptyWorld);
-            populateWorld(initWorld);
-        }
-
-        //updates the world before returning it
-        private Entity[][] flatten() {
-            updateWorld();
-            return initWorld;
-        }
-
-        //returns EntitySet
-        private EntitySet getEntitySet() {
-            return this.entitySet;
-        }
-    }
+//
+//        //creates populated World
+//        private void createInitWorld() {
+//            initWorld = cloneWorld(emptyWorld);
+//            String[][] listingCopy = boardConfig.getEntityListing().clone();
+//            for (int z = 1; z < listingCopy.length; z++) {
+//                for (int w = 0; w < Integer.parseInt(listingCopy[z][1]); w++) {
+//                    createNewEntity(EntityTypes.valueOf(listingCopy[z][0]));
+//                }
+//            }
+//            populateWorld(initWorld);
+//        }
+//
+//        //creates new Entity, if position not already in use
+//        private void createNewEntity(EntityTypes entityType) {
+//            Random random = new Random();
+//            for (int i = 0; i < 1; i++) {
+//                int randomY = random.nextInt((initWorld.length - 2)) + 1;
+//                int randomX = random.nextInt((initWorld[0].length - 2)) + 1;
+//                XY randomPosition = new XY(randomY, randomX);
+//                if (!entitySet.getSet().isIntersecting(randomPosition)) {
+//                    entitySet.addNewEntity(entityType, 0, new XY(randomY, randomX), 0);
+//                } else {
+//                    i--;
+//                }
+//            }
+//        }
+//
+//        //writes world array
+//        private void populateWorld(Entity[][] world) {
+//            int position = entitySet.getSet().getSize();
+//            Entity current = entitySet.getSet().getEntityAtPosition(position);
+//            while (current.getEntityType() != EntityTypes.Wall) {
+//                current = entitySet.getSet().getEntityAtPosition(position);
+//                XY cP = current.getPosition(); //cP: currentPosition
+//                world[cP.getY()][cP.getX()] = current;
+//                position--;
+//            }
+//        }
+//
+//        //clones Worlds (2D-Entity-Arrays)
+//        private Entity[][] cloneWorld(Entity[][] arrayToClone) {
+//            Entity[][] clonedArray = new Entity[arrayToClone.length][arrayToClone[0].length];
+//            for (int y = 0; y < emptyWorld.length; y++) {
+//                for (int x = 0; x < emptyWorld[y].length; x++) {
+//                    clonedArray[y][x] = arrayToClone[y][x];
+//                }
+//            }
+//            return clonedArray;
+//        }
+//
+//        //prints the world (for testing purpose only)
+////        private void printWorld() {
+////            for (int x = 0; x < initWorld.length; x++) {
+////                for (int y = 0; y < initWorld[x].length; y++) {
+////                    if (initWorld[x][y] != null)
+////                        System.out.print(initWorld[x][y]);
+////                    else System.out.print(" ");
+////                }
+////                System.out.print('\n');
+////            }
+////        }
+//
+//        //places entities at their current position in world
+//        private void updateWorld() {
+//            initWorld = cloneWorld(emptyWorld);
+//            populateWorld(initWorld);
+//        }
+//
+//        //updates the world before returning it
+//        private Entity[][] flatten() {
+//            updateWorld();
+//            return initWorld;
+//        }
+//
+//        //returns EntitySet
+//        private EntitySet getEntitySet() {
+//            return this.entitySet;
+//        }
+//    }
 
     private Board board;
 
+    private Entity[][] flattenboard;
+
     //constructor FlattenedBoard
-    public FlattenedBoard() {
-        board = new Board();
+    public FlattenedBoard(Board board) {
+        this.board = board;
+        this.flattenboard = board.flatten();
     }
 
     //returns nearest squirrel
     public Entity nearestEntity(XY positionOfEntityLookingForPlayer, EntityTypes no1, EntityTypes no2, EntityTypes no3) {
-        Entity[] entities = getBoard().getEntitySet().getSet().getEntityList(no1, no2, no3);
-        Entity temp;
-        for (int i = 1; i < entities.length; i++) {
-            for (int j = i; j > 0; j--) {
-                int squirrelVector1 = entities[j].getPosition().getSteps(positionOfEntityLookingForPlayer);
-                int squirrelVector2 = entities[j - 1].getPosition().getSteps(positionOfEntityLookingForPlayer);
-                if (!(squirrelVector1 == 0 && squirrelVector2 == 0)) {
-                    if (squirrelVector1 < squirrelVector2) {
-                        temp = entities[j];
-                        entities[j] = entities[j - 1];
-                        entities[j - 1] = temp;
+        if (board.collectRace(no1, no2, no3) != null) {
+            Entity[] entities = board.collectRace(no1, no2, no3);
+            Entity temp;
+            for (int i = 1; i < entities.length; i++) {
+                for (int j = i; j > 0; j--) {
+                    int squirrelVector1 = entities[j].getPosition().getSteps(positionOfEntityLookingForPlayer);
+                    int squirrelVector2 = entities[j - 1].getPosition().getSteps(positionOfEntityLookingForPlayer);
+                    if (!(squirrelVector1 == 0 && squirrelVector2 == 0)) {
+                        if (squirrelVector1 < squirrelVector2) {
+                            temp = entities[j];
+                            entities[j] = entities[j - 1];
+                            entities[j - 1] = temp;
+                        }
                     }
                 }
             }
+            return entities[0];
         }
-        return entities[0];
+        return null;
     }
 
-    //removes Entity from game
-    public void kill(Entity entityToKill) {
-        getEntitySet().getSet().remove(entityToKill);
-    }
 
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
         //position of nextSquirrel
-        XY nextSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel).getPosition();
+        Entity nearestSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel);
+        if (nearestSquirrel != null) {
+            XY nextSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel).getPosition();
 
-        //if nextSquirrel is in range of bad-beast's vision
-        if (nextSquirrel.getSteps(badBeast.getPosition()) < badBeast.getVision()) {
-            //update moveDirection to attack the squirrel
-            moveDirection = badBeast.getPosition().setNewPosition(badBeast.getPosition().createMovementVector(nextSquirrel.createVector(badBeast.getPosition())));
+            //if nextSquirrel is in range of bad-beast's vision
+            if (nextSquirrel.getSteps(badBeast.getPosition()) < badBeast.getVision()) {
+                //update moveDirection to attack the squirrel
+                moveDirection = badBeast.getPosition().setNewPosition(badBeast.getPosition().createMovementVector(nextSquirrel.createVector(badBeast.getPosition())));
+            }
         }
 
         //get intersecting Entity
-        Entity intersectingEntity = getEntitySet().getSet().getIntersectingObject(moveDirection, badBeast);
+        Entity intersectingEntity = flattenboard[moveDirection.getY()][moveDirection.getX()];
 
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
@@ -196,18 +200,22 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
 
         //position of nextSquirrel
-        XY nextSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel).getPosition();
 
-        //if nextFood is in range of good-beast's vision
-        if (nextSquirrel.getSteps(goodBeast.getPosition()) < goodBeast.getVision()) {
-            //create negative movement vector in order to run away
-            XY movementVector = goodBeast.getPosition().createMovementVector(nextSquirrel.createVector(goodBeast.getPosition()));
-            XY negativeMovementVector = new XY(movementVector.getY() * -1, movementVector.getX() * -1);
-            moveDirection = goodBeast.getPosition().setNewPosition(negativeMovementVector);
+        Entity nearestSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel);
+        if (nearestSquirrel != null) {
+            XY nextSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel).getPosition();
+
+            //if squirrel is in vision
+            if (nextSquirrel.getSteps(goodBeast.getPosition()) < goodBeast.getVision()) {
+                //create negative movement vector in order to run away
+                XY movementVector = goodBeast.getPosition().createMovementVector(nextSquirrel.createVector(goodBeast.getPosition()));
+                XY negativeMovementVector = new XY(movementVector.getY() * -1, movementVector.getX() * -1);
+                moveDirection = goodBeast.getPosition().setNewPosition(negativeMovementVector);
+            }
         }
 
         //if nothing is intersecting move there
-        if (!(getEntitySet().getSet().isIntersecting(moveDirection))) {
+        if (getEntityType(moveDirection) == null) {
             goodBeast.updatePosition(moveDirection);
         }
     }
@@ -228,7 +236,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
 
         //get intersecting Entity
-        Entity intersectingEntity = getEntitySet().getSet().getIntersectingObject(moveDirection, miniSquirrel);
+        Entity intersectingEntity = flattenboard[moveDirection.getY()][moveDirection.getX()];
 
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
@@ -244,10 +252,10 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 ((BadBeast) intersectingEntity).setAmountBites(-1);
             } else if (type == EntityTypes.BotSquirrel || type == EntityTypes.HandOperatedMasterSquirrel) {
                 if (((MasterSquirrel) intersectingEntity).isParent(miniSquirrel)) {
-                    if(miniSquirrel.getTimer() == 2){
-                    intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
-                    kill(miniSquirrel);
-                    }else miniSquirrel.updateTimer();
+                    if (miniSquirrel.getTimer() == 2) {
+                        intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
+                        kill(miniSquirrel);
+                    } else miniSquirrel.updateTimer();
                 } else {
                     kill(miniSquirrel);
                 }
@@ -265,8 +273,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void tryMove(MasterSquirrel masterSquirrel, XY moveDirection) {
 
         //if anything intersecting at destination
-        if (getEntitySet().getSet().isIntersecting(moveDirection)) {
-            Entity intersectingEntity = getEntitySet().getSet().getIntersectingObject(moveDirection, masterSquirrel);
+        if (flattenboard[moveDirection.getY()][moveDirection.getX()] != null) {
+            Entity intersectingEntity = flattenboard[moveDirection.getY()][moveDirection.getX()];
             EntityTypes type = intersectingEntity.getEntityType();
             if (type == EntityTypes.Wall) {
                 masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
@@ -279,15 +287,14 @@ public class FlattenedBoard implements EntityContext, BoardView {
                         killAndReplace(intersectingEntity);
                     }
                 } else {
-                    masterSquirrel.updatePosition(moveDirection);
                     killAndReplace(intersectingEntity);
                 }
             } else if (type == EntityTypes.MiniSquirrel) {
                 if (masterSquirrel.isParent((MiniSquirrel) intersectingEntity)) {
-                    if(((MiniSquirrel) intersectingEntity).getTimer() == 2) {
+                    if (((MiniSquirrel) intersectingEntity).getTimer() == 2) {
                         masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
                         kill(intersectingEntity);
-                    }else ((MiniSquirrel) intersectingEntity).updateTimer();
+                    } else ((MiniSquirrel) intersectingEntity).updateTimer();
                 } else {
                     kill(intersectingEntity);
                 }
@@ -299,35 +306,65 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     @Override
     public EntityTypes getEntityType(int y, int x) {
-        return getWorld()[y][x].getEntityType();
+        if (inWorld(x, y)) {
+            if (flattenboard[y][x] != null) {
+                return flattenboard[y][x].getEntityType();
+            }
+        }
+        return null;
     }
 
-    //provides public access to board.obj
-    public Board getBoard() {
-        return board;
+    @Override
+    public EntityTypes getEntityType(XY position) {
+        if (inWorld(position.getX(), position.getY())) {
+            if (flattenboard[position.getY()][position.getX()] != null) {
+                return flattenboard[position.getY()][position.getX()].getEntityType();
+            }
+        }
+        return null;
     }
 
-    public EntitySet getEntitySet() {
-        return getBoard().getEntitySet();
+    //simplifier to check whether coordinates are available
+    private boolean inWorld(int x, int y) {
+        return (y >= 0 && y <= getSize().getY()) && (x >= 0 && x <= getSize().getX());
     }
 
-    //provides public access to world !updated world!
-    public Entity[][] getWorld() {
-        return getBoard().flatten();
-    }
-
+    //removes and replaces entity
+    @Override
     public void killAndReplace(Entity entityToKill) {
-        getEntitySet().getSet().remove(entityToKill);
-        getBoard().createNewEntity(entityToKill.getEntityType());
+        //remove entity
+        board.removeEntity(entityToKill);
+        flattenboard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
+
+
+        //replace entity
+        XY temp = new XY(0, 0);
+        if (entityToKill instanceof GoodPlant) {
+            board.addEntity(new GoodPlant(EntityTypes.GoodPlant, 0, temp.getRandomPositionInWorld(getSize())));
+        }
+        if (entityToKill instanceof BadPlant) {
+            board.addEntity(new BadPlant(EntityTypes.BadPlant, 0, temp.getRandomPositionInWorld(getSize())));
+        }
+        if (entityToKill instanceof GoodBeast) {
+            board.addEntity(new GoodBeast(EntityTypes.GoodBeast, 0, temp.getRandomPositionInWorld(getSize())));
+        }
+        if (entityToKill instanceof BadBeast) {
+            board.addEntity(new BadBeast(EntityTypes.BadBeast, 0, temp.getRandomPositionInWorld(getSize())));
+        }
     }
 
-    public void giveBirth(XY position, int energy, int parentID) {
-        getBoard().entitySet.addNewEntity(EntityTypes.MiniSquirrel, energy, position, parentID);
+    //removes entity
+    @Override
+    public void kill(Entity entityToKill) {
+        //remove entity
+        board.removeEntity(entityToKill);
+        flattenboard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
     }
 
-    public void addEntity(Entity entity) {
-        getBoard().getEntitySet().addEntity(entity);
-
+    //provides board size
+    @Override
+    public XY getSize() {
+        return board.getSize();
     }
 
 }

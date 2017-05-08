@@ -3,28 +3,29 @@ package de.hsa.games.fatsquirrel.core;
 
 public class State {
 
-    private FlattenedBoard board;
+    private Board board;
     private int highScore;
 
-    public State(FlattenedBoard board){
+    public State(Board board) {
         this.board = board;
         update();
     }
 
-    public void update(){
-        flattenedBoard().getWorld();
-        int position = flattenedBoard().getEntitySet().getSet().getSize();
-        Entity current = flattenedBoard().getEntitySet().getSet().getEntityAtPosition(position);
-        while (current.getEntityType() != EntityTypes.Wall) {
-            if(current instanceof Character) {
-                ((Character) current).nextStep(flattenedBoard());
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public void update() {
+        FlattenedBoard flattenedBoard = flattenedBoard();
+        for (int i = 0; i < board.getSize().getY() * board.getSize().getX(); i++) {
+            if (board.getEntities() != null && board.getEntities()[i] instanceof Character) {
+                ((Character) board.getEntities()[i]).nextStep(flattenedBoard);
             }
-            current = flattenedBoard().getEntitySet().getSet().getEntityAtPosition(--position);
         }
     }
 
-    public FlattenedBoard flattenedBoard(){
-        return this.board;
+    public FlattenedBoard flattenedBoard() {
+        return new FlattenedBoard(board);
     }
 
 }

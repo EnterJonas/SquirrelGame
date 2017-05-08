@@ -74,6 +74,13 @@ public class XY {
         return y;
     }
 
+    public XY getRandomPositionInWorld(XY size){
+        Random random = new Random();
+        int randomY = random.nextInt((size.getY()-1)+1-1) + 1;
+        int randomX = random.nextInt((size.getX()-1)+1-1) + 1;
+        return new XY(randomY, randomX);
+    }
+
     @Override
     public String toString() {
         return "x= " + this.getX() + '\n'
