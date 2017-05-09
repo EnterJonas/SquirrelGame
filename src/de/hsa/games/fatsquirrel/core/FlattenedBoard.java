@@ -142,8 +142,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     //returns nearest squirrel
     public Entity nearestEntity(XY positionOfEntityLookingForPlayer, EntityTypes no1, EntityTypes no2, EntityTypes no3) {
-        if (board.collectRace(no1, no2, no3) != null) {
-            Entity[] entities = board.collectRace(no1, no2, no3);
+        if (board.getEntitySet().collectRace(no1, no2, no3) != null) {
+            Entity[] entities = board.getEntitySet().collectRace(no1, no2, no3);
             Entity temp;
             for (int i = 1; i < entities.length; i++) {
                 for (int j = i; j > 0; j--) {
@@ -162,7 +162,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
         return null;
     }
-
 
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
@@ -333,23 +332,23 @@ public class FlattenedBoard implements EntityContext, BoardView {
     @Override
     public void killAndReplace(Entity entityToKill) {
         //remove entity
-        board.removeEntity(entityToKill);
+        board.getEntitySet().removeEntity(entityToKill);
         flattenboard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
 
 
         //replace entity
         XY temp = new XY(0, 0);
         if (entityToKill instanceof GoodPlant) {
-            board.addEntity(new GoodPlant(EntityTypes.GoodPlant, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new GoodPlant(EntityTypes.GoodPlant, 0, temp.getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof BadPlant) {
-            board.addEntity(new BadPlant(EntityTypes.BadPlant, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new BadPlant(EntityTypes.BadPlant, 0, temp.getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof GoodBeast) {
-            board.addEntity(new GoodBeast(EntityTypes.GoodBeast, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new GoodBeast(EntityTypes.GoodBeast, 0, temp.getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof BadBeast) {
-            board.addEntity(new BadBeast(EntityTypes.BadBeast, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new BadBeast(EntityTypes.BadBeast, 0, temp.getRandomPositionInWorld(getSize())));
         }
     }
 
@@ -357,7 +356,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
     @Override
     public void kill(Entity entityToKill) {
         //remove entity
-        board.removeEntity(entityToKill);
+        board.getEntitySet().removeEntity(entityToKill);
         flattenboard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
     }
 

@@ -18,8 +18,8 @@ public class State {
     public void update() {
         FlattenedBoard flattenedBoard = flattenedBoard();
         for (int i = 0; i < board.getSize().getY() * board.getSize().getX(); i++) {
-            if (board.getEntities() != null && board.getEntities()[i] instanceof Character) {
-                ((Character) board.getEntities()[i]).nextStep(flattenedBoard);
+            if (board.getEntitySet().getEntities() != null && board.getEntitySet().getEntities()[i] instanceof Character) {
+                ((Character) board.getEntitySet().getEntities()[i]).nextStep(flattenedBoard);
             }
         }
     }

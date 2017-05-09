@@ -17,7 +17,7 @@ public class GameImpl extends Game {
     public GameImpl(State state) {
         super(state);
         this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1,1));
-        this.getState().getBoard().addEntity(handOperatedMasterSquirrel);
+        this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
     }
 
     @Override
@@ -59,8 +59,7 @@ public class GameImpl extends Game {
         Method method = null;
 
         try {
-            method = processorClass.getMethod(commandType.name().toLowerCase(),
-                    commandType.getParamTypes());
+            method = processorClass.getMethod(commandType.name().toLowerCase(), commandType.getParamTypes());
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }
@@ -115,6 +114,8 @@ public class GameImpl extends Game {
         return " Eichhörnchen \r\n Energie: " + handOperatedMasterSquirrel.getEnergy();
     }
 
+
+    //TODO needs some work
     public void spawn_mini() throws NotEnoughEnergyException {
         System.out.println("SPAWN_MINI");
         int miniEnergy = 199;

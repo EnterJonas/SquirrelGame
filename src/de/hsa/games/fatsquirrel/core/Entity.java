@@ -2,7 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
 
-public abstract class Entity {
+public class Entity {
 
     private static int entityAmount = 0;
     private int UID = entityAmount;
