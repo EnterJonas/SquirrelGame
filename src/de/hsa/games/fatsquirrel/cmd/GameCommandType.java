@@ -10,7 +10,7 @@ public enum GameCommandType implements CommandTypeInfo {
     DOWN("s"," * hilfetext zu down"),
     RIGHT("d"," * hilfetext zu right"),
     MASTER_ENERGY("master_energy"," * hilfetext zu master_energy"),
-    SPAWN_MINI("spawn_mini"," * hilfetext zu spawn_mini");
+    SPAWN_MINI("spawn_mini"," * hilfetext zu spawn_mini", int.class);
 
     private String command;
     private String help;

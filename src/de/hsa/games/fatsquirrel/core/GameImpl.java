@@ -16,7 +16,7 @@ public class GameImpl extends Game {
 
     public GameImpl(State state) {
         super(state);
-        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1,1));
+        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1, 1));
         this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
     }
 
@@ -31,7 +31,6 @@ public class GameImpl extends Game {
 
         Class<?> processorClass = null;
 
-        // GameImpl als processorClass laden
         try {
             processorClass = Class.forName(this.getClass().getName());
         } catch (ClassNotFoundException e) {
@@ -48,7 +47,7 @@ public class GameImpl extends Game {
 
         for (int i = 0; i < params.length; i++) {
             if (commandType.getParamTypes()[i] == int.class) {
-                castedParams[i] = Integer.parseInt((String) params[i]);
+                castedParams[i] = Integer.parseInt(String.valueOf(params[i]));
             } else if (commandType.getParamTypes()[i] == float.class) {
                 castedParams[i] = Float.parseFloat((String) params[i]);
             } else {
@@ -66,6 +65,8 @@ public class GameImpl extends Game {
 
         try {
             method.invoke(this, castedParams);
+        } catch (NumberFormatException e) {
+            System.err.println("FEHLER: falsches Argument");
         } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -114,17 +115,17 @@ public class GameImpl extends Game {
         return " Eichhörnchen \r\n Energie: " + handOperatedMasterSquirrel.getEnergy();
     }
 
-
-    //TODO needs some work
-    public void spawn_mini() throws NotEnoughEnergyException {
+    //mini currently spawns at random position in game...
+    public void spawn_mini(int energy) throws NotEnoughEnergyException {
         System.out.println("SPAWN_MINI");
-        int miniEnergy = 199;
-        if (handOperatedMasterSquirrel.getEnergy() > miniEnergy) {
-            //this.getState().flattenedBoard().giveBirth(handOperatedMasterSquirrel.getPosition(), miniEnergy, handOperatedMasterSquirrel.getParentID());
-            handOperatedMasterSquirrel.updateEnergy(-miniEnergy);
-        } else
-            throw new NotEnoughEnergyException("Nicht genug Energie!");
 
+        if (handOperatedMasterSquirrel.getEnergy() > energy) {
+            MiniSquirrel miniSquirrel = new MiniSquirrel(EntityTypes.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+            this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
+            handOperatedMasterSquirrel.updateEnergy(-energy);
+        } else {
+            throw new NotEnoughEnergyException("Nicht genug Energie!");
+        }
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }
 }
