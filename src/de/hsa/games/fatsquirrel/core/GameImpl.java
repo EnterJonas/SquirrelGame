@@ -116,17 +116,21 @@ public class GameImpl extends Game {
     }
 
     //mini currently spawns at random position in game...
-    public void spawn_mini(int energy) throws NotEnoughEnergyException {
+    public void spawn_mini(int energy) {
         System.out.println("SPAWN_MINI");
-
-        if (handOperatedMasterSquirrel.getEnergy() > energy) {
-            MiniSquirrel miniSquirrel = new MiniSquirrel(EntityTypes.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
-            this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
-            handOperatedMasterSquirrel.updateEnergy(-energy);
-        } else {
-            throw new NotEnoughEnergyException("Nicht genug Energie!");
+        try {
+            if (handOperatedMasterSquirrel.getEnergy() > energy) {
+                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityTypes.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+                this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
+                handOperatedMasterSquirrel.updateEnergy(-energy);
+            } else {
+                throw new NotEnoughEnergyException("Nicht genug Energie!");
+            }
+        } catch (NotEnoughEnergyException e) {
+            System.out.println(e.getMessage());
         }
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }
+
 }
 
