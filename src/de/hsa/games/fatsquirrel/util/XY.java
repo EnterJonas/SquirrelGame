@@ -76,8 +76,8 @@ public class XY {
 
     public XY getRandomPositionInWorld(XY size){
         Random random = new Random();
-        int randomY = random.nextInt((size.getY()-1)+1-1) + 1;
-        int randomX = random.nextInt((size.getX()-1)+1-1) + 1;
+        int randomY = random.nextInt((size.getY() - 2)) + 1;
+        int randomX = random.nextInt((size.getX() - 2)) + 1;
         return new XY(randomY, randomX);
     }
 
