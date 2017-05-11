@@ -3,21 +3,19 @@ package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class EntitySet {
 
     private Entity[] entities;
 
     private XY size;
 
-    public EntitySet(XY size){
-        entities = new Entity[size.getY()* size.getX()];
+    public EntitySet(XY size) {
+        entities = new Entity[size.getY() * size.getX()];
         this.size = size;
     }
 
     //add entity to array
-    public void addEntity(Entity newEntity){
+    public void addEntity(Entity newEntity) {
         if (isPositionInUse(newEntity.getPosition())) {
             newEntity.updatePosition(newEntity.getPosition().getRandomPositionInWorld(this.size));
             this.addEntity(newEntity);
@@ -39,8 +37,9 @@ public class EntitySet {
     //checks whether position is already in use
     private boolean isPositionInUse(XY position) {
         for (int i = 0; i < entities.length; i++) {
-            if (entities[i] != null && entities[i].getPosition().equals(position)) {
-                return true;
+            if (entities[i] != null) {
+                if (entities[i].getPosition().getY() == position.getY() && entities[i].getPosition().getX() == position.getX())
+                    return true;
             }
         }
         return false;
@@ -52,6 +51,7 @@ public class EntitySet {
             if (entities[i] != null) {
                 if (entities[i].equals(entity)) {
                     entities[i] = null;
+                    return;
                 }
             }
         }
@@ -87,12 +87,9 @@ public class EntitySet {
         return entities;
     }
 
-    public Entity[] getEntities(){
+    public Entity[] getEntities() {
         return entities;
     }
-
-
-
 
 
 }

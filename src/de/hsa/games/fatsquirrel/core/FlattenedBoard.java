@@ -221,7 +221,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     @Override
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
-
         //position of nextSquirrel
         XY nextFood = nearestEntity(miniSquirrel.getPosition(), EntityTypes.GoodBeast, EntityTypes.GoodPlant, null).getPosition();
         XY nextSquirrel = nearestEntity(miniSquirrel.getPosition(), EntityTypes.BotSquirrel, EntityTypes.HandOperatedMasterSquirrel, null).getPosition();
@@ -251,12 +250,12 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 ((BadBeast) intersectingEntity).setAmountBites(-1);
             } else if (type == EntityTypes.BotSquirrel || type == EntityTypes.HandOperatedMasterSquirrel) {
                 if (((MasterSquirrel) intersectingEntity).isParent(miniSquirrel)) {
-                    if (miniSquirrel.getTimer() == 2) {
-                        intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
-                        kill(miniSquirrel);
-                    } else miniSquirrel.updateTimer();
+                    intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
+                    kill(miniSquirrel);
+                    return;
                 } else {
                     kill(miniSquirrel);
+                    return;
                 }
             }
         } else {
@@ -290,10 +289,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
                 }
             } else if (type == EntityTypes.MiniSquirrel) {
                 if (masterSquirrel.isParent((MiniSquirrel) intersectingEntity)) {
-                    if (((MiniSquirrel) intersectingEntity).getTimer() == 2) {
-                        masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
-                        kill(intersectingEntity);
-                    } else ((MiniSquirrel) intersectingEntity).updateTimer();
+                    masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
+                    kill(intersectingEntity);
                 } else {
                     kill(intersectingEntity);
                 }

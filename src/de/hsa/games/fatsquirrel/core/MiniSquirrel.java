@@ -6,13 +6,12 @@ import de.hsa.games.fatsquirrel.util.XY;
 public class MiniSquirrel extends Squirrel {
 
     private static final int VISION = 10;
-    private int timer = 0;
-    private MasterSquirrel father;
+    private MasterSquirrel parent;
 
 
-    public MiniSquirrel(EntityTypes entityType, int energy, XY position, MasterSquirrel father) {
+    public MiniSquirrel(EntityTypes entityType, int energy, XY position, MasterSquirrel parent) {
         super(entityType, energy, position);
-        this.father = father;
+        this.parent = parent;
     }
 
     @Override
@@ -28,15 +27,7 @@ public class MiniSquirrel extends Squirrel {
     }
 
     public MasterSquirrel getParent(){
-        return this.father;
-    }
-
-    public void updateTimer(){
-        this.timer++;
-    }
-
-    public int getTimer(){
-        return this.timer;
+        return this.parent;
     }
 
     public int getVision(){

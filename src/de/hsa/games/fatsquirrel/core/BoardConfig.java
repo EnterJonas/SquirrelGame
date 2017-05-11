@@ -3,7 +3,7 @@ package de.hsa.games.fatsquirrel.core;
 
 public class BoardConfig {
 
-    private String amountWall = "1";
+    private String amountWall = "0";
     private String amountBadPlant = "1";
     private String amountGoodPlant = "1";
     private String amountGoodBeast = "1";
