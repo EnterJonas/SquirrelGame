@@ -21,12 +21,12 @@ public class GameImpl extends Game {
     }
 
     @Override
-    protected void render() {
+    public void render() {
         this.getUi().render(this.getState().flattenedBoard());
     }
 
     @Override
-    protected void progressInput() throws IOException, ScanException {
+    public void progressInput() throws IOException, ScanException {
         CommandScanner commandScanner = new CommandScanner(GameCommandType.values(), new BufferedReader(new InputStreamReader(System.in)));
 
         Class<?> processorClass = null;

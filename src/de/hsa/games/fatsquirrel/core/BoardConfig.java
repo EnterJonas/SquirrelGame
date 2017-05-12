@@ -1,6 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
 
+import de.hsa.games.fatsquirrel.util.XY;
+
 public class BoardConfig {
 
     private String amountWall = "0";
@@ -40,6 +42,10 @@ public class BoardConfig {
     //returns height of world
     public int getPitchHeight() {
         return pitchHeight;
+    }
+
+    public XY getSize(){
+        return new XY(getPitchWidth(), getPitchHeight());
     }
 
     //calculates amount of initial entities

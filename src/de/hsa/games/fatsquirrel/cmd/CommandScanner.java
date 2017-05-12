@@ -35,7 +35,7 @@ public class CommandScanner {
         String input;
 
         //remove unnecessary characters
-        System.out.print("Kommando eingeben: ");
+        //System.out.print("Kommando eingeben: ");
 
         input=(inputReader.readLine()).trim();
 

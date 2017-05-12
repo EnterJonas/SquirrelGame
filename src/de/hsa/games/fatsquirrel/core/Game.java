@@ -8,26 +8,31 @@ import java.io.IOException;
 
 public abstract class Game {
 
+    private static final int FPS = 3000;
+
     private UI ui;
+    private State state;
 
-
-
-    protected State state;
-    BoardView boardView;
 
 
     public Game(State state) {
         this.state = state;
-        this.boardView = state.flattenedBoard();
     }
 
     public void run() {
         while (true) {
-            render();
+            //render();
+
+            try {
+                Thread.sleep(FPS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             try {
                 progressInput();
             } catch (ScanException e) {
-				//e.printStackTrace();
+//				e.printStackTrace();
                 System.err.println(e.getMessage());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -51,11 +56,11 @@ public abstract class Game {
         return this.state;
     }
 
-    protected abstract void render();
+    public abstract void render();
 
-    protected abstract void progressInput() throws IOException, ScanException;
+    public abstract void progressInput() throws IOException, ScanException;
 
-    protected void update() {
+    public void update() {
         state.update();
 
 

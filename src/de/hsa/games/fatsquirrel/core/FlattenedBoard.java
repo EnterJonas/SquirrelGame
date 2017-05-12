@@ -2,8 +2,6 @@ package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
 
-import java.util.Random;
-
 public class FlattenedBoard implements EntityContext, BoardView {
 
 //    private class Board {
@@ -132,12 +130,12 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
     private Board board;
 
-    private Entity[][] flattenboard;
+    private Entity[][] flattenBoard;
 
     //constructor FlattenedBoard
     public FlattenedBoard(Board board) {
         this.board = board;
-        this.flattenboard = board.flatten();
+        this.flattenBoard = board.flatten();
     }
 
     //returns nearest squirrel
@@ -178,7 +176,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
 
         //get intersecting Entity
-        Entity intersectingEntity = flattenboard[moveDirection.getY()][moveDirection.getX()];
+        Entity intersectingEntity = flattenBoard[moveDirection.getY()][moveDirection.getX()];
 
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
@@ -234,7 +232,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
 
         //get intersecting Entity
-        Entity intersectingEntity = flattenboard[moveDirection.getY()][moveDirection.getX()];
+        Entity intersectingEntity = flattenBoard[moveDirection.getY()][moveDirection.getX()];
 
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
@@ -271,8 +269,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void tryMove(MasterSquirrel masterSquirrel, XY moveDirection) {
 
         //if anything intersecting at destination
-        if (flattenboard[moveDirection.getY()][moveDirection.getX()] != null) {
-            Entity intersectingEntity = flattenboard[moveDirection.getY()][moveDirection.getX()];
+        if (flattenBoard[moveDirection.getY()][moveDirection.getX()] != null) {
+            Entity intersectingEntity = flattenBoard[moveDirection.getY()][moveDirection.getX()];
             EntityTypes type = intersectingEntity.getEntityType();
             if (type == EntityTypes.Wall) {
                 masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
@@ -303,8 +301,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
     @Override
     public EntityTypes getEntityType(int y, int x) {
         if (inWorld(x, y)) {
-            if (flattenboard[y][x] != null) {
-                return flattenboard[y][x].getEntityType();
+            if (flattenBoard[y][x] != null) {
+                return flattenBoard[y][x].getEntityType();
             }
         }
         return null;
@@ -313,8 +311,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
     @Override
     public EntityTypes getEntityType(XY position) {
         if (inWorld(position.getX(), position.getY())) {
-            if (flattenboard[position.getY()][position.getX()] != null) {
-                return flattenboard[position.getY()][position.getX()].getEntityType();
+            if (flattenBoard[position.getY()][position.getX()] != null) {
+                return flattenBoard[position.getY()][position.getX()].getEntityType();
             }
         }
         return null;
@@ -330,7 +328,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void killAndReplace(Entity entityToKill) {
         //remove entity
         board.getEntitySet().removeEntity(entityToKill);
-        flattenboard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
+        flattenBoard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
 
 
         //replace entity
@@ -354,7 +352,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void kill(Entity entityToKill) {
         //remove entity
         board.getEntitySet().removeEntity(entityToKill);
-        flattenboard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
+        flattenBoard[entityToKill.getPosition().getY()][entityToKill.getPosition().getX()] = null;
     }
 
     //provides board size
