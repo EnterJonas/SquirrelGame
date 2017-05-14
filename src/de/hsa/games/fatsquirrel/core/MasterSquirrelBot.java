@@ -21,7 +21,17 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 this.botControllerFactory = new BotControllerFactory() {
                     @Override
                     public BotController createMasterBotController() {
-                        return null;
+                        return new BotController() {
+                            @Override
+                            public void nextStep(ControllerContext view) {
+                                if(!isStunned()){
+                                    XY direction = getPosition().getNewPosition();
+                                    view.move(direction);
+                                }else{
+                                    setSuspensionCounter(-1);
+                                }
+                            }
+                        };
                     }
 
                     @Override

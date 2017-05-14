@@ -12,12 +12,17 @@ import java.lang.reflect.Method;
 public class GameImpl extends Game {
 
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel;
+    private MasterSquirrelBot masterSquirrelBot;
 
 
     public GameImpl(State state) {
         super(state);
         this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1, 1));
         this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
+
+        this.masterSquirrelBot = new MasterSquirrelBot(EntityTypes.MasterSquirrelBot, 0, new XY(1, 1), "idk");
+        this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
+
     }
 
     @Override

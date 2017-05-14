@@ -37,6 +37,8 @@ public class ConsoleUI implements UI{
                         case HandOperatedMasterSquirrel:
                             System.out.print("S");
                             break;
+                        case MasterSquirrelBot:
+                            System.out.print("O");
                     }
                 else System.out.print(" ");
             }

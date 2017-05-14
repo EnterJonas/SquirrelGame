@@ -10,8 +10,6 @@ public class BoardConfig {
     private String amountGoodPlant = "1";
     private String amountGoodBeast = "1";
     private String amountBadBeast = "1";
-    private String amountHandOperatedMasterSquirrel = "0";
-    private String amountBotMasterSquirrel = "0";
 
     private int pitchWidth = 40;
     private int pitchHeight = 20;
@@ -29,9 +27,7 @@ public class BoardConfig {
                 {EntityTypes.BadPlant.toString(), amountBadPlant},
                 {EntityTypes.GoodPlant.toString(), amountGoodPlant},
                 {EntityTypes.GoodBeast.toString(), amountGoodBeast},
-                {EntityTypes.BadBeast.toString(), amountBadBeast},
-                {EntityTypes.HandOperatedMasterSquirrel.toString(), amountHandOperatedMasterSquirrel},
-                {EntityTypes.MasterSquirrelBot.toString(), amountBotMasterSquirrel}};
+                {EntityTypes.BadBeast.toString(), amountBadBeast}};
     }
 
     //returns width of word
