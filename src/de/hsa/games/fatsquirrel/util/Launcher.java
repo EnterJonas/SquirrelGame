@@ -36,38 +36,59 @@ public class Launcher extends Application {
     }
 
     private void menu(String [] args, Launcher launcher){
-        printMenuOptions();
-        readInput(args, launcher);
+        chooseGameType(launcher, args);
 
     }
 
-    private void readInput(String [] args, Launcher launcher){
+    private void chooseGameType(Launcher launcher, String [] args){
+        System.out.println("Choose gameType you want to play");
+        System.out.println("1 >> for SinglePlayer mode without bot");
+        System.out.println("2 >> for SinglePlayer mode without userInput");
+        System.out.println("3 >> for SinglePLayer (against) a bot");
+        System.out.println("4 >> exit this menu");
+        int input = scanner.nextInt();
+        MasterSquirrel hand = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1,1));
+        MasterSquirrel bot = new MasterSquirrelBot(EntityTypes.MasterSquirrelBot, 0, new XY(1,1), "idk");
+        if(input == 1){
+            chooseUI(launcher,args, hand, null);
+        }else if (input == 2){
+            chooseUI(launcher,args, null, bot);
+        }else if(input == 3){
+            chooseUI(launcher,args, hand, bot);
+        }else if(input == 4){
+            System.exit(-1);
+        }else{
+            chooseGameType(launcher, args);
+        }
+    }
+
+
+    private void chooseUI(Launcher launcher, String [] args, MasterSquirrel hand, MasterSquirrel bot){
+        System.out.println("Please enter one of the following");
+        System.out.println("1 >> to start game in console mode");
+        System.out.println("2 >> to start game in graphic mode");
+        System.out.println("3 >> exit this menu");
         int input = scanner.nextInt();
         if(input == 1){
-            startConsoleGame(launcher);
+            startConsoleGame(launcher, hand, bot);
         }else if (input == 2){
             startGUIGame(args);
         }else if(input == 3){
             System.exit(-1);
         }else{
-            printMenuOptions();
-            readInput(args,launcher);
+            chooseUI(launcher, args, hand, bot);
         }
     }
 
-    private void printMenuOptions(){
-        System.out.println("Please enter one of the following");
-        System.out.println("1 >> to start game in console mode");
-        System.out.println("2 >> to start game in graphic mode");
-        System.out.println("3 >> to exit this menu");
-    }
 
-    private void startConsoleGame(Launcher launcher){
+
+
+    private void startConsoleGame(Launcher launcher, MasterSquirrel hand, MasterSquirrel bot){
         UI ui = new ConsoleUI();
         Board board = new Board(new BoardConfig());
         State state = new State(board);
 
-        GameImpl gi = new GameImpl(state);
+        GameImpl gi = new GameImpl(state, hand, bot);
         gi.setUi(ui);
 
         launcher.startGame(gi);

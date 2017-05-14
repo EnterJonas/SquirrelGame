@@ -14,16 +14,42 @@ public class GameImpl extends Game {
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel;
     private MasterSquirrelBot masterSquirrelBot;
 
+    private MasterSquirrel[] squirrels;
 
-    public GameImpl(State state) {
+
+    public GameImpl(State state, MasterSquirrel... squirrels) {
         super(state);
-        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1, 1));
-        this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
+        this.squirrels = squirrels;
 
-        this.masterSquirrelBot = new MasterSquirrelBot(EntityTypes.MasterSquirrelBot, 0, new XY(1, 1), "idk");
-        this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
+        guidedOrBotOrBoth();
+
+
+//        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1, 1));
+//        this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
+//
+//        this.masterSquirrelBot = new MasterSquirrelBot(EntityTypes.MasterSquirrelBot, 0, new XY(1, 1), "idk");
+//        this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
 
     }
+
+    private void guidedOrBotOrBoth() {
+        if (this.squirrels != null) {
+            for (int i = 0; i < squirrels.length; i++) {
+                if (this.squirrels[i] != null) {
+                    switch (this.squirrels[i].getEntityType()) {
+                        case MasterSquirrelBot:
+                            this.masterSquirrelBot = (MasterSquirrelBot) this.squirrels[i];
+                            break;
+                        case HandOperatedMasterSquirrel:
+                            this.handOperatedMasterSquirrel = (HandOperatedMasterSquirrel) this.squirrels[i];
+                            break;
+                    }
+                    this.getState().getBoard().getEntitySet().addEntity(squirrels[i]);
+                }
+            }
+        }
+    }
+
 
     @Override
     public void render() {
@@ -137,7 +163,7 @@ public class GameImpl extends Game {
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }
 
-    public void spawn_mini(){
+    public void spawn_mini() {
         System.out.println("SPAWN_MINI");
         int energy = 200;
         try {
