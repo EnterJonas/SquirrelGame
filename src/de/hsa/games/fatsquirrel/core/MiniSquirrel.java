@@ -5,7 +5,7 @@ import de.hsa.games.fatsquirrel.util.XY;
 
 public class MiniSquirrel extends Squirrel {
 
-    private static final int VISION = 10;
+    private static final int VISION = 20;
     private MasterSquirrel parent;
 
 
@@ -13,6 +13,8 @@ public class MiniSquirrel extends Squirrel {
         super(entityType, energy, position);
         this.parent = parent;
     }
+
+
 
     @Override
     public void nextStep(EntityContext context) {

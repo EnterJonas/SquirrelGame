@@ -31,7 +31,7 @@ public class BoardConfig {
                 {EntityTypes.GoodBeast.toString(), amountGoodBeast},
                 {EntityTypes.BadBeast.toString(), amountBadBeast},
                 {EntityTypes.HandOperatedMasterSquirrel.toString(), amountHandOperatedMasterSquirrel},
-                {EntityTypes.BotSquirrel.toString(), amountBotMasterSquirrel}};
+                {EntityTypes.MasterSquirrelBot.toString(), amountBotMasterSquirrel}};
     }
 
     //returns width of word
@@ -45,7 +45,7 @@ public class BoardConfig {
     }
 
     public XY getSize(){
-        return new XY(getPitchWidth(), getPitchHeight());
+        return new XY(getPitchHeight(), getPitchWidth());
     }
 
     //calculates amount of initial entities

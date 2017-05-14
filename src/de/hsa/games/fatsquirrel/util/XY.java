@@ -50,6 +50,14 @@ public class XY {
             return steps;
     }
 
+    public XY add(XY xy){
+        return new XY(y+xy.y, x+xy.x);
+    }
+
+    public XY add(int y, int x){
+        return new XY(this.x+x,this.y+y);
+    }
+
     public XY createMovementVector(XY vector){
         int x = 0;
         int y = 0;

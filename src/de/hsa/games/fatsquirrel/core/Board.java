@@ -42,9 +42,6 @@ public class Board {
             for (int amount = 0; amount < Integer.parseInt(boardConfig.getEntityListing()[i][1]); amount++) {
                 EntityTypes entityTypes = (EntityTypes.valueOf(boardConfig.getEntityListing()[i][0]));
                 switch (entityTypes) {
-                    case BotSquirrel:
-                        entitySet.addEntity(new BotSquirrel(EntityTypes.BotSquirrel, 0, temp.getRandomPositionInWorld(this.getSize())));
-                        break;
                     case GoodPlant:
                         entitySet.addEntity(new GoodPlant(EntityTypes.GoodPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;

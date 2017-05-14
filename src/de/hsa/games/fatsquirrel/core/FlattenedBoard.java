@@ -164,9 +164,9 @@ public class FlattenedBoard implements EntityContext, BoardView {
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
         //position of nextSquirrel
-        Entity nearestSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel);
+        Entity nearestSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel);
         if (nearestSquirrel != null) {
-            XY nextSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel).getPosition();
+            XY nextSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel).getPosition();
 
             //if nextSquirrel is in range of bad-beast's vision
             if (nextSquirrel.getSteps(badBeast.getPosition()) < badBeast.getVision()) {
@@ -181,7 +181,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
             EntityTypes type = intersectingEntity.getEntityType();
-            if (type == EntityTypes.MiniSquirrel || type == EntityTypes.BotSquirrel || type == EntityTypes.HandOperatedMasterSquirrel) {
+            if (type == EntityTypes.MiniSquirrel || type == EntityTypes.MasterSquirrelBot || type == EntityTypes.HandOperatedMasterSquirrel) {
                 intersectingEntity.updateEnergy(badBeast.getEnergy());
                 badBeast.setAmountBites(-1);
                 if (badBeast.getRemainingBites() == 0) {
@@ -198,9 +198,9 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
         //position of nextSquirrel
 
-        Entity nearestSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel);
+        Entity nearestSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel);
         if (nearestSquirrel != null) {
-            XY nextSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.BotSquirrel, EntityTypes.MiniSquirrel).getPosition();
+            XY nextSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel).getPosition();
 
             //if squirrel is in vision
             if (nextSquirrel.getSteps(goodBeast.getPosition()) < goodBeast.getVision()) {
@@ -221,7 +221,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
         //position of nextSquirrel
         XY nextFood = nearestEntity(miniSquirrel.getPosition(), EntityTypes.GoodBeast, EntityTypes.GoodPlant, null).getPosition();
-        XY nextSquirrel = nearestEntity(miniSquirrel.getPosition(), EntityTypes.BotSquirrel, EntityTypes.HandOperatedMasterSquirrel, null).getPosition();
+        XY nextSquirrel = nearestEntity(miniSquirrel.getPosition(), EntityTypes.MasterSquirrelBot, EntityTypes.HandOperatedMasterSquirrel, null).getPosition();
 
         //if nextSquirrel is in range of miniSquirrel's vision
         if (nextFood.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()) {
@@ -246,7 +246,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             } else if (type == EntityTypes.BadBeast) {
                 miniSquirrel.updateEnergy(intersectingEntity.getEnergy());
                 ((BadBeast) intersectingEntity).setAmountBites(-1);
-            } else if (type == EntityTypes.BotSquirrel || type == EntityTypes.HandOperatedMasterSquirrel) {
+            } else if (type == EntityTypes.MasterSquirrelBot || type == EntityTypes.HandOperatedMasterSquirrel) {
                 if (((MasterSquirrel) intersectingEntity).isParent(miniSquirrel)) {
                     intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
                     kill(miniSquirrel);

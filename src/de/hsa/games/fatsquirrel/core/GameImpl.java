@@ -132,5 +132,22 @@ public class GameImpl extends Game {
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }
 
+    public void spawn_mini(){
+        System.out.println("SPAWN_MINI");
+        int energy = 200;
+        try {
+            if (handOperatedMasterSquirrel.getEnergy() > energy) {
+                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityTypes.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+                this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
+                handOperatedMasterSquirrel.updateEnergy(-energy);
+            } else {
+                throw new NotEnoughEnergyException("Nicht genug Energie!");
+            }
+        } catch (NotEnoughEnergyException e) {
+            System.out.println(e.getMessage());
+        }
+        handOperatedMasterSquirrel.setInput(new XY(0, 0));
+    }
+
 }
 

@@ -8,11 +8,10 @@ import java.io.IOException;
 
 public abstract class Game {
 
-    private static final int FPS = 3000;
+    private static final int FPS = 5000;
 
     private UI ui;
     private State state;
-
 
 
     public Game(State state) {
@@ -21,7 +20,7 @@ public abstract class Game {
 
     public void run() {
         while (true) {
-            //render();
+            render();
 
             try {
                 Thread.sleep(FPS);
