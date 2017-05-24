@@ -5,7 +5,7 @@ import de.hsa.games.fatsquirrel.util.XY;
 
 public interface BoardView {
 
-    EntityTypes getEntityType(int y, int x);
+    EntityType getEntityType(int y, int x);
     XY getSize();
 
 }

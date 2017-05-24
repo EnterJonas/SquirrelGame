@@ -8,16 +8,16 @@ public class Entity {
     private int UID = entityAmount;
     private int energy;
     private XY position;
-    private EntityTypes entityType;
+    private EntityType entityType;
 
-    public Entity(EntityTypes entityType, int energy, XY position) {
+    public Entity(EntityType entityType, int energy, XY position) {
         this.entityType = entityType;
         this.energy = energy;
         this.position = position;
         entityAmount++;
     }
 
-    public EntityTypes getEntityType(){
+    public EntityType getEntityType(){
         return this.entityType;
     }
 

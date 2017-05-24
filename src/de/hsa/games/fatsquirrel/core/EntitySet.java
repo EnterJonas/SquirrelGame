@@ -67,14 +67,15 @@ public class EntitySet {
         return null;
     }
 
-    public Entity[] collectRace(EntityTypes no1, EntityTypes no2, EntityTypes no3) {
+    public Entity[] collectRace(EntityType ... no) {
         Entity[] container = new Entity[entities.length];
         int counter = 0;
 
         //collects all of the provided entities in one array
         for (int i = 0; i < entities.length; i++) {
             if (entities[i] != null) {
-                if (entities[i].getEntityType() == no1 || entities[i].getEntityType() == no2 || entities[i].getEntityType() == no3) {
+                for(int w = 0; w < no.length; w++)
+                if (entities[i].getEntityType() == no[w]) {
                     container[counter++] = entities[i];
                 }
             }

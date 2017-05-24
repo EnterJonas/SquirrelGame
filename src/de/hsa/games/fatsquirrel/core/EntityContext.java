@@ -11,11 +11,11 @@ public interface EntityContext {
     void tryMove(BadBeast badBeast, XY moveDirection);
     void tryMove(MiniSquirrel miniSquirrel, XY moveDirection);
     void tryMove(MasterSquirrel masterSquirrel, XY moveDirection);
-    Entity nearestEntity(XY positionOfEntityLookingForPlayer, EntityTypes no1, EntityTypes no2, EntityTypes no3);
+    Entity[] nearestEntity(XY positionOfEntityLookingForPlayer, EntityType ... no);
 
     void killAndReplace(Entity entityToKill);
     void kill(Entity entityToKill);
-    EntityTypes getEntityType(XY position);
+    EntityType getEntityType(XY position);
 
 
 }

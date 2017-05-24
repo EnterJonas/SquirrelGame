@@ -29,7 +29,7 @@ public class Board {
         for (int y = 0; y < boardConfig.getPitchHeight(); y++) {
             for (int x = 0; x < boardConfig.getPitchWidth(); x++) {
                 if (y == 0 || x == 0 || y == (boardConfig.getPitchHeight() - 1) || x == (boardConfig.getPitchWidth() - 1)) {
-                    entitySet.addEntity(new Wall(EntityTypes.Wall, 0, new XY(y, x)));
+                    entitySet.addEntity(new Wall(EntityType.Wall, 0, new XY(y, x)));
                 }
             }
         }
@@ -40,22 +40,22 @@ public class Board {
         XY temp = new XY(0, 0);
         for (int i = 0; i < boardConfig.getEntityListing().length; i++) {
             for (int amount = 0; amount < Integer.parseInt(boardConfig.getEntityListing()[i][1]); amount++) {
-                EntityTypes entityTypes = (EntityTypes.valueOf(boardConfig.getEntityListing()[i][0]));
-                switch (entityTypes) {
+                EntityType entityType = (EntityType.valueOf(boardConfig.getEntityListing()[i][0]));
+                switch (entityType) {
                     case GoodPlant:
-                        entitySet.addEntity(new GoodPlant(EntityTypes.GoodPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new GoodPlant(EntityType.GoodPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
                     case BadPlant:
-                        entitySet.addEntity(new BadPlant(EntityTypes.BadPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new BadPlant(EntityType.BadPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
                     case GoodBeast:
-                        entitySet.addEntity(new GoodBeast(EntityTypes.GoodBeast, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new GoodBeast(EntityType.GoodBeast, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
                     case BadBeast:
-                        entitySet.addEntity(new BadBeast(EntityTypes.BadBeast, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new BadBeast(EntityType.BadBeast, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
                     case Wall:
-                        entitySet.addEntity(new Wall(EntityTypes.Wall, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new Wall(EntityType.Wall, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
                 }
             }

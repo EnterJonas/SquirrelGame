@@ -4,16 +4,23 @@ package de.hsa.games.fatsquirrel.core;
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
+import de.hsa.games.fatsquirrel.botapi.SpawnException;
+import de.hsa.games.fatsquirrel.cmd.NotEnoughEnergyException;
 import de.hsa.games.fatsquirrel.util.XY;
+import java.util.Random;
+import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
 
     private static final int ENERGY = 1000;
+    private static final int SPAWN_ENERGY = 100;
     private BotControllerFactory botControllerFactory;
     private BotController masterBotController;
 
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public MasterSquirrelBot(EntityTypes entityType, int energy, XY position, String typeOfTheBot) {
+
+    public MasterSquirrelBot(EntityType entityType, int energy, XY position, String typeOfTheBot) {
         super(entityType, energy + ENERGY, position);
         switch (typeOfTheBot) {
             case ("idk"):
@@ -33,7 +40,6 @@ public class MasterSquirrelBot extends MasterSquirrel {
                             }
                         };
                     }
-
                     @Override
                     public BotController createMiniBotController() {
                         return null;
@@ -63,17 +69,27 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY getViewLowerLeft() {
-            return masterSquirrel.getPosition().add(1, -1);
+            return masterSquirrel.getPosition().plus(15, -15);
         }
 
         @Override
         public XY getViewUpperRight() {
-            return masterSquirrel.getPosition().add(-1, 1);
+            return masterSquirrel.getPosition().plus(-15, 15);
         }
 
         @Override
-        public EntityTypes getEntityAt(XY xy) {
+        public XY locate() {
+            return null;
+        }
+
+        @Override
+        public EntityType getEntityAt(XY xy) {
             return context.getEntityType(xy);
+        }
+
+        @Override
+        public boolean isMine(XY xy) {
+            return false;
         }
 
         @Override
@@ -83,7 +99,18 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public void spawnMiniBot(XY direction, int energy) {
-            //TODO not sure what to do cause impl already in gameImpl
+            try {
+                if(energy >= masterSquirrel.getEnergy()){
+                    throw new SpawnException("Nicht genug Energie oder Richtung nicht verfügbar!");
+                }
+            } catch (SpawnException e) {
+                LOGGER.warning(e.getMessage());
+            }
+        }
+
+        @Override
+        public void implode() {
+            //masterSquirrels cannot implode...
         }
 
         @Override
@@ -91,6 +118,21 @@ public class MasterSquirrelBot extends MasterSquirrel {
             return masterSquirrel.getEnergy();
         }
 
+        @Override
+        public XY directionOfMaster() {
+            return null;
+        }
+
+        @Override
+        public long getRemainingSteps() {
+            return 0;
+        }
+
+    }
+
+    @Override
+    public String toString(){
+        return "Bot";
     }
 
 

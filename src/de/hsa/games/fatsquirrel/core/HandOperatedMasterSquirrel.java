@@ -8,7 +8,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
     private static final int ENERGY = 1000;
     private XY input;
 
-    public HandOperatedMasterSquirrel(EntityTypes entityType, int energy, XY position) {
+    public HandOperatedMasterSquirrel(EntityType entityType, int energy, XY position) {
         super(entityType, energy + ENERGY, position);
     }
 
@@ -31,6 +31,10 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     public XY getInput(){
         return this.input;
+    }
+
+    public String toString(){
+        return "GuidedMasterSquirrel";
     }
 
 

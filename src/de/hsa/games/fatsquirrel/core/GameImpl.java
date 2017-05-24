@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 public class GameImpl extends Game {
 
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel;
     private MasterSquirrelBot masterSquirrelBot;
 
@@ -21,14 +23,14 @@ public class GameImpl extends Game {
         super(state);
         this.squirrels = squirrels;
 
-        guidedOrBotOrBoth();
+        //guidedOrBotOrBoth();
 
 
-//        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1, 1));
-//        this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
-//
-//        this.masterSquirrelBot = new MasterSquirrelBot(EntityTypes.MasterSquirrelBot, 0, new XY(1, 1), "idk");
-//        this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
+        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityType.HandOperatedMasterSquirrel, 0, new XY(1, 1));
+        this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
+
+        this.masterSquirrelBot = new MasterSquirrelBot(EntityType.MasterSquirrelBot, 0, new XY(1, 1), "idk");
+        this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
 
     }
 
@@ -148,34 +150,34 @@ public class GameImpl extends Game {
 
     //mini currently spawns at random position in game...
     public void spawn_mini(int energy) {
-        System.out.println("SPAWN_MINI");
+        LOGGER.info("SPAWN_MINI");
         try {
             if (handOperatedMasterSquirrel.getEnergy() > energy) {
-                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityTypes.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityType.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
                 this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
                 handOperatedMasterSquirrel.updateEnergy(-energy);
             } else {
                 throw new NotEnoughEnergyException("Nicht genug Energie!");
             }
         } catch (NotEnoughEnergyException e) {
-            System.out.println(e.getMessage());
+            LOGGER.warning(e.getMessage());
         }
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }
 
     public void spawn_mini() {
-        System.out.println("SPAWN_MINI");
+        LOGGER.info("SPAWN_MINI");
         int energy = 200;
         try {
             if (handOperatedMasterSquirrel.getEnergy() > energy) {
-                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityTypes.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityType.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
                 this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
                 handOperatedMasterSquirrel.updateEnergy(-energy);
             } else {
                 throw new NotEnoughEnergyException("Nicht genug Energie!");
             }
         } catch (NotEnoughEnergyException e) {
-            System.out.println(e.getMessage());
+            LOGGER.warning(e.getMessage());
         }
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }

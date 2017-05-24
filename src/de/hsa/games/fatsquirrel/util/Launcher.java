@@ -4,11 +4,13 @@ import de.hsa.games.fatsquirrel.cmd.ConsoleUI;
 import de.hsa.games.fatsquirrel.cmd.FxUI;
 import de.hsa.games.fatsquirrel.cmd.UI;
 import de.hsa.games.fatsquirrel.core.*;
+import de.hsa.games.fatsquirrel.logger.MyLogger;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Launcher extends Application {
@@ -47,8 +49,8 @@ public class Launcher extends Application {
         System.out.println("3 >> for SinglePLayer (against) a bot");
         System.out.println("4 >> exit this menu");
         int input = scanner.nextInt();
-        MasterSquirrel hand = new HandOperatedMasterSquirrel(EntityTypes.HandOperatedMasterSquirrel, 0, new XY(1,1));
-        MasterSquirrel bot = new MasterSquirrelBot(EntityTypes.MasterSquirrelBot, 0, new XY(1,1), "idk");
+        MasterSquirrel hand = new HandOperatedMasterSquirrel(EntityType.HandOperatedMasterSquirrel, 0, new XY(1,1));
+        MasterSquirrel bot = new MasterSquirrelBot(EntityType.MasterSquirrelBot, 0, new XY(1,1), "idk");
         if(input == 1){
             chooseUI(launcher,args, hand, null);
         }else if (input == 2){
@@ -132,6 +134,15 @@ public class Launcher extends Application {
     }
 
     public static void main (String[] args){
+
+        try {
+            MyLogger.setup();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Problems with creating the log files");
+        }
+
+
         Launcher launcher = new Launcher();
         launcher.menu(args, launcher);
     }

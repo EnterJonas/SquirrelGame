@@ -23,11 +23,11 @@ public class BoardConfig {
 
     //returns String Array with amount and Type of initial entities
     public String[][] getEntityListing() {
-        return new String[][]{{EntityTypes.Wall.toString(), amountWall},
-                {EntityTypes.BadPlant.toString(), amountBadPlant},
-                {EntityTypes.GoodPlant.toString(), amountGoodPlant},
-                {EntityTypes.GoodBeast.toString(), amountGoodBeast},
-                {EntityTypes.BadBeast.toString(), amountBadBeast}};
+        return new String[][]{{EntityType.Wall.toString(), amountWall},
+                {EntityType.BadPlant.toString(), amountBadPlant},
+                {EntityType.GoodPlant.toString(), amountGoodPlant},
+                {EntityType.GoodBeast.toString(), amountGoodBeast},
+                {EntityType.BadBeast.toString(), amountBadBeast}};
     }
 
     //returns width of word

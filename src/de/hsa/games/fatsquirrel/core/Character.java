@@ -6,7 +6,7 @@ public abstract class Character extends Entity {
 
     private int suspensionCounter;
 
-    public Character(EntityTypes entityType, int energy, XY position) {
+    public Character(EntityType entityType, int energy, XY position) {
         super(entityType, energy, position);
     }
 

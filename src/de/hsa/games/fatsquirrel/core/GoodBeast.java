@@ -7,7 +7,7 @@ public class GoodBeast extends Character {
     private static final int ENERGY = 200;
     private static final int VISION = 6;
 
-    public GoodBeast(EntityTypes entityType, int energy, XY position) {
+    public GoodBeast(EntityType entityType, int energy, XY position) {
         super(entityType, energy + ENERGY, position);
     }
 
@@ -30,7 +30,7 @@ public class GoodBeast extends Character {
     }
 
     public String toString() {
-        return "G";
+        return "GoodBeast";
     }
 
 }

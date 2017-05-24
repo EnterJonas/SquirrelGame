@@ -6,12 +6,12 @@ public class GoodPlant extends Entity {
 
     private static final int ENERGY = 100;
 
-    public GoodPlant(EntityTypes entityType, int energy, XY position) {
+    public GoodPlant(EntityType entityType, int energy, XY position) {
         super(entityType, energy + ENERGY, position);
     }
 
     public String toString(){
-        return "g";
+        return "GoodPlant";
     }
 
 }

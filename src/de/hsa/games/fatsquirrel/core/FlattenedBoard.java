@@ -2,6 +2,8 @@ package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
 
+import java.util.logging.Logger;
+
 public class FlattenedBoard implements EntityContext, BoardView {
 
 //    private class Board {
@@ -26,13 +28,13 @@ public class FlattenedBoard implements EntityContext, BoardView {
 //            for (int y = 0; y < emptyWorld.length; y++) {
 //                for (int x = 0; x < emptyWorld[y].length; x++) {
 //                    if (y == 0 || x == 0 || y == (emptyWorld.length - 1) || x == (emptyWorld[y].length - 1)) {
-//                        entitySet.addNewEntity(EntityTypes.Wall, 0, new XY(y, x), 0);
+//                        entitySet.addNewEntity(EntityType.Wall, 0, new XY(y, x), 0);
 //                    }
 //                }
 //            }
 //            String[][] listingCopy = boardConfig.getEntityListing().clone();
 //            for (int w = 0; w < Integer.parseInt((listingCopy[0][1])); w++) {
-//                createNewEntity(EntityTypes.valueOf(listingCopy[0][0]));
+//                createNewEntity(EntityType.valueOf(listingCopy[0][0]));
 //            }
 //
 //            createWalls(emptyWorld);
@@ -54,14 +56,14 @@ public class FlattenedBoard implements EntityContext, BoardView {
 //            String[][] listingCopy = boardConfig.getEntityListing().clone();
 //            for (int z = 1; z < listingCopy.length; z++) {
 //                for (int w = 0; w < Integer.parseInt(listingCopy[z][1]); w++) {
-//                    createNewEntity(EntityTypes.valueOf(listingCopy[z][0]));
+//                    createNewEntity(EntityType.valueOf(listingCopy[z][0]));
 //                }
 //            }
 //            populateWorld(initWorld);
 //        }
 //
 //        //creates new Entity, if position not already in use
-//        private void createNewEntity(EntityTypes entityType) {
+//        private void createNewEntity(EntityType entityType) {
 //            Random random = new Random();
 //            for (int i = 0; i < 1; i++) {
 //                int randomY = random.nextInt((initWorld.length - 2)) + 1;
@@ -79,7 +81,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
 //        private void populateWorld(Entity[][] world) {
 //            int position = entitySet.getSet().getSize();
 //            Entity current = entitySet.getSet().getEntityAtPosition(position);
-//            while (current.getEntityType() != EntityTypes.Wall) {
+//            while (current.getEntityType() != EntityType.Wall) {
 //                current = entitySet.getSet().getEntityAtPosition(position);
 //                XY cP = current.getPosition(); //cP: currentPosition
 //                world[cP.getY()][cP.getX()] = current;
@@ -128,6 +130,8 @@ public class FlattenedBoard implements EntityContext, BoardView {
 //        }
 //    }
 
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     private Board board;
 
     private Entity[][] flattenBoard;
@@ -139,9 +143,9 @@ public class FlattenedBoard implements EntityContext, BoardView {
     }
 
     //returns nearest squirrel
-    public Entity nearestEntity(XY positionOfEntityLookingForPlayer, EntityTypes no1, EntityTypes no2, EntityTypes no3) {
-        if (board.getEntitySet().collectRace(no1, no2, no3) != null) {
-            Entity[] entities = board.getEntitySet().collectRace(no1, no2, no3);
+    public Entity[] nearestEntity(XY positionOfEntityLookingForPlayer, EntityType ... no) {
+        if (board.getEntitySet().collectRace(no) != null) {
+            Entity[] entities = board.getEntitySet().collectRace(no);
             Entity temp;
             for (int i = 1; i < entities.length; i++) {
                 for (int j = i; j > 0; j--) {
@@ -156,7 +160,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
                     }
                 }
             }
-            return entities[0];
+            return entities;
         }
         return null;
     }
@@ -164,14 +168,16 @@ public class FlattenedBoard implements EntityContext, BoardView {
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
         //position of nextSquirrel
-        Entity nearestSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel);
+        Entity nearestSquirrel = nearestEntity(badBeast.getPosition(), EntityType.HandOperatedMasterSquirrel, EntityType.MasterSquirrelBot, EntityType.MiniSquirrel)[0];
         if (nearestSquirrel != null) {
-            XY nextSquirrel = nearestEntity(badBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel).getPosition();
+
+            XY nextSquirrel = nearestEntity(badBeast.getPosition(), EntityType.HandOperatedMasterSquirrel, EntityType.MasterSquirrelBot, EntityType.MiniSquirrel)[0].getPosition();
 
             //if nextSquirrel is in range of bad-beast's vision
             if (nextSquirrel.getSteps(badBeast.getPosition()) < badBeast.getVision()) {
                 //update moveDirection to attack the squirrel
                 moveDirection = badBeast.getPosition().setNewPosition(badBeast.getPosition().createMovementVector(nextSquirrel.createVector(badBeast.getPosition())));
+                LOGGER.info(badBeast + " hat Faehrte aufgenommen und verfolgt " + nearestSquirrel);
             }
         }
 
@@ -180,16 +186,19 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
-            EntityTypes type = intersectingEntity.getEntityType();
-            if (type == EntityTypes.MiniSquirrel || type == EntityTypes.MasterSquirrelBot || type == EntityTypes.HandOperatedMasterSquirrel) {
+            EntityType type = intersectingEntity.getEntityType();
+            if (type == EntityType.MiniSquirrel || type == EntityType.MasterSquirrelBot || type == EntityType.HandOperatedMasterSquirrel) {
                 intersectingEntity.updateEnergy(badBeast.getEnergy());
                 badBeast.setAmountBites(-1);
+                LOGGER.info(badBeast + " beisst Squirrel");
                 if (badBeast.getRemainingBites() == 0) {
                     killAndReplace(badBeast);
+                    LOGGER.info(badBeast + " ist gestorben");
                 }
             }
         } else {
             badBeast.updatePosition(moveDirection);
+            LOGGER.finest(badBeast + " bewegt sich nach " + moveDirection);
         }
     }
 
@@ -197,38 +206,42 @@ public class FlattenedBoard implements EntityContext, BoardView {
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
 
         //position of nextSquirrel
-
-        Entity nearestSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel);
+        Entity nearestSquirrel = nearestEntity(goodBeast.getPosition(), EntityType.HandOperatedMasterSquirrel, EntityType.MasterSquirrelBot, EntityType.MiniSquirrel)[0];
         if (nearestSquirrel != null) {
-            XY nextSquirrel = nearestEntity(goodBeast.getPosition(), EntityTypes.HandOperatedMasterSquirrel, EntityTypes.MasterSquirrelBot, EntityTypes.MiniSquirrel).getPosition();
-
+            XY nextSquirrel = nearestEntity(goodBeast.getPosition(), EntityType.HandOperatedMasterSquirrel, EntityType.MasterSquirrelBot, EntityType.MiniSquirrel)[0].getPosition();
             //if squirrel is in vision
             if (nextSquirrel.getSteps(goodBeast.getPosition()) < goodBeast.getVision()) {
                 //create negative movement vector in order to run away
                 XY movementVector = goodBeast.getPosition().createMovementVector(nextSquirrel.createVector(goodBeast.getPosition()));
                 XY negativeMovementVector = new XY(movementVector.getY() * -1, movementVector.getX() * -1);
                 moveDirection = goodBeast.getPosition().setNewPosition(negativeMovementVector);
+                LOGGER.info(goodBeast + " ist auf der Flucht vor " + nearestSquirrel);
             }
         }
 
         //if nothing is intersecting move there
         if (getEntityType(moveDirection) == null) {
             goodBeast.updatePosition(moveDirection);
+            LOGGER.finest(goodBeast + " bewegt sich nach " + moveDirection);
         }
     }
 
     @Override
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
         //position of nextSquirrel
-        XY nextFood = nearestEntity(miniSquirrel.getPosition(), EntityTypes.GoodBeast, EntityTypes.GoodPlant, null).getPosition();
-        XY nextSquirrel = nearestEntity(miniSquirrel.getPosition(), EntityTypes.MasterSquirrelBot, EntityTypes.HandOperatedMasterSquirrel, null).getPosition();
+        XY nextFood = nearestEntity(miniSquirrel.getPosition(), EntityType.GoodBeast, EntityType.GoodPlant, null)[0].getPosition();
+        MasterSquirrel nearestSquirrel = (MasterSquirrel) nearestEntity(miniSquirrel.getPosition(), EntityType.MasterSquirrelBot, EntityType.HandOperatedMasterSquirrel, null)[0];
+
+        XY nextSquirrel = nearestSquirrel.getPosition();
 
         //if nextSquirrel is in range of miniSquirrel's vision
         if (nextFood.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()) {
             //update moveDirection to collect food
             moveDirection = miniSquirrel.getPosition().setNewPosition(miniSquirrel.getPosition().createMovementVector(nextFood.createVector(miniSquirrel.getPosition())));
-        } else if (nextSquirrel.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()) {
+            LOGGER.info(miniSquirrel + " hat Essensverfolgung aufgenommen");
+        } else if (nearestSquirrel.isParent(miniSquirrel) && nextSquirrel.getSteps(miniSquirrel.getPosition()) < miniSquirrel.getVision()) {
             moveDirection = miniSquirrel.getPosition().setNewPosition(miniSquirrel.getPosition().createMovementVector(nextSquirrel.createVector(miniSquirrel.getPosition())));
+            LOGGER.info(miniSquirrel + " auf dem Weg nach hause");
         }
 
         //get intersecting Entity
@@ -236,31 +249,38 @@ public class FlattenedBoard implements EntityContext, BoardView {
 
         //if there actually is an intersecting entity
         if (intersectingEntity != null) {
-            EntityTypes type = intersectingEntity.getEntityType();
-            if (type == EntityTypes.Wall) {
+            EntityType type = intersectingEntity.getEntityType();
+            if (type == EntityType.Wall) {
                 miniSquirrel.updateEnergy(intersectingEntity.getEnergy());
                 miniSquirrel.setSuspensionCounter(3);
-            } else if (type == EntityTypes.GoodBeast || type == EntityTypes.GoodPlant || type == EntityTypes.BadPlant) {
+                LOGGER.info(miniSquirrel + " laeuft gegen die Wand");
+            } else if (type == EntityType.GoodBeast || type == EntityType.GoodPlant || type == EntityType.BadPlant) {
                 miniSquirrel.updateEnergy(intersectingEntity.getEnergy());
                 killAndReplace(intersectingEntity);
-            } else if (type == EntityTypes.BadBeast) {
+                LOGGER.info(miniSquirrel + " isst gerade " + intersectingEntity);
+            } else if (type == EntityType.BadBeast) {
                 miniSquirrel.updateEnergy(intersectingEntity.getEnergy());
                 ((BadBeast) intersectingEntity).setAmountBites(-1);
-            } else if (type == EntityTypes.MasterSquirrelBot || type == EntityTypes.HandOperatedMasterSquirrel) {
+                LOGGER.info(miniSquirrel + " wurde gebissen");
+            } else if (type == EntityType.MasterSquirrelBot || type == EntityType.HandOperatedMasterSquirrel) {
                 if (((MasterSquirrel) intersectingEntity).isParent(miniSquirrel)) {
+                    LOGGER.info(miniSquirrel + " übergibt Energy " + miniSquirrel.getEnergy());
                     intersectingEntity.updateEnergy(miniSquirrel.getEnergy());
                     kill(miniSquirrel);
                     return;
                 } else {
                     kill(miniSquirrel);
+                    LOGGER.info(miniSquirrel + " ist von " + intersectingEntity + " vernichtet worden");
                     return;
                 }
             }
         } else {
             miniSquirrel.updatePosition(moveDirection);
+            LOGGER.finest(miniSquirrel + " bewegt sich nach " + moveDirection);
         }
         if (miniSquirrel.getEnergy() <= 0) {
             kill(miniSquirrel);
+            LOGGER.info(miniSquirrel + " ist eines natürlichen Todes gestorben");
         }
 
     }
@@ -271,35 +291,41 @@ public class FlattenedBoard implements EntityContext, BoardView {
         //if anything intersecting at destination
         if (flattenBoard[moveDirection.getY()][moveDirection.getX()] != null) {
             Entity intersectingEntity = flattenBoard[moveDirection.getY()][moveDirection.getX()];
-            EntityTypes type = intersectingEntity.getEntityType();
-            if (type == EntityTypes.Wall) {
+            EntityType type = intersectingEntity.getEntityType();
+            if (type == EntityType.Wall) {
                 masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
                 masterSquirrel.setSuspensionCounter(3);
-            } else if (type == EntityTypes.BadBeast || type == EntityTypes.BadPlant || type == EntityTypes.GoodBeast || type == EntityTypes.GoodPlant) {
+                LOGGER.severe(masterSquirrel + " laeuft gegen die Wand!");
+            } else if (type == EntityType.BadBeast || type == EntityType.BadPlant || type == EntityType.GoodBeast || type == EntityType.GoodPlant) {
                 masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
-                if (type == EntityTypes.BadBeast) {
+                if (type == EntityType.BadBeast) {
                     ((BadBeast) intersectingEntity).setAmountBites(-1);
+                    LOGGER.info(masterSquirrel + " wurde gebissen");
                     if (((BadBeast) intersectingEntity).getRemainingBites() == 0) {
                         killAndReplace(intersectingEntity);
                     }
                 } else {
                     killAndReplace(intersectingEntity);
+                    LOGGER.info(masterSquirrel + " isst gerade " + intersectingEntity);
                 }
-            } else if (type == EntityTypes.MiniSquirrel) {
+            } else if (type == EntityType.MiniSquirrel) {
                 if (masterSquirrel.isParent((MiniSquirrel) intersectingEntity)) {
                     masterSquirrel.updateEnergy(intersectingEntity.getEnergy());
                     kill(intersectingEntity);
+                    LOGGER.info(masterSquirrel + " hat Kind gefunden");
                 } else {
                     kill(intersectingEntity);
+                    LOGGER.info(masterSquirrel +  " vernichtet fremdes Kind");
                 }
             }
         } else {
             masterSquirrel.updatePosition(moveDirection);
+            LOGGER.finest(masterSquirrel.toString() + " is moving to position " + moveDirection);
         }
     }
 
     @Override
-    public EntityTypes getEntityType(int y, int x) {
+    public EntityType getEntityType(int y, int x) {
         if (inWorld(x, y)) {
             if (flattenBoard[y][x] != null) {
                 return flattenBoard[y][x].getEntityType();
@@ -309,7 +335,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
     }
 
     @Override
-    public EntityTypes getEntityType(XY position) {
+    public EntityType getEntityType(XY position) {
         if (inWorld(position.getX(), position.getY())) {
             if (flattenBoard[position.getY()][position.getX()] != null) {
                 return flattenBoard[position.getY()][position.getX()].getEntityType();
@@ -334,16 +360,16 @@ public class FlattenedBoard implements EntityContext, BoardView {
         //replace entity
         XY temp = new XY(0, 0);
         if (entityToKill instanceof GoodPlant) {
-            board.getEntitySet().addEntity(new GoodPlant(EntityTypes.GoodPlant, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new GoodPlant(EntityType.GoodPlant, 0, temp.getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof BadPlant) {
-            board.getEntitySet().addEntity(new BadPlant(EntityTypes.BadPlant, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new BadPlant(EntityType.BadPlant, 0, temp.getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof GoodBeast) {
-            board.getEntitySet().addEntity(new GoodBeast(EntityTypes.GoodBeast, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new GoodBeast(EntityType.GoodBeast, 0, temp.getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof BadBeast) {
-            board.getEntitySet().addEntity(new BadBeast(EntityTypes.BadBeast, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new BadBeast(EntityType.BadBeast, 0, temp.getRandomPositionInWorld(getSize())));
         }
     }
 

@@ -1,8 +1,8 @@
 package de.hsa.games.fatsquirrel.cmd;
 
+import de.hsa.games.fatsquirrel.core.EntityType;
 import de.hsa.games.fatsquirrel.core.GameImpl;
 import de.hsa.games.fatsquirrel.core.BoardView;
-import de.hsa.games.fatsquirrel.core.EntityTypes;
 import de.hsa.games.fatsquirrel.util.XY;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -125,47 +125,47 @@ public class FxUI extends Scene implements UI {
             for (int x = 0; x < viewSize.getX(); x++) {
                 if (view.getEntityType(y, x) == null) {
                 } else {
-                    if (view.getEntityType(y, x) == EntityTypes.Wall) {
+                    if (view.getEntityType(y, x) == EntityType.Wall) {
                         gc.setFill(Color.YELLOW);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.HandOperatedMasterSquirrel) {
+                    if (view.getEntityType(y, x) == EntityType.HandOperatedMasterSquirrel) {
                         gc.setFill(Color.BLUE);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.BadBeast) {
+                    if (view.getEntityType(y, x) == EntityType.BadBeast) {
                         gc.setFill(Color.RED);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.GoodBeast) {
+                    if (view.getEntityType(y, x) == EntityType.GoodBeast) {
                         gc.setFill(Color.GREEN);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.GoodPlant) {
+                    if (view.getEntityType(y, x) == EntityType.GoodPlant) {
                         gc.setFill(Color.GREEN);
                         gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.BadPlant) {
+                    if (view.getEntityType(y, x) == EntityType.BadPlant) {
                         gc.setFill(Color.RED);
                         gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.MiniSquirrel) {
+                    if (view.getEntityType(y, x) == EntityType.MiniSquirrel) {
                         gc.setFill(Color.BLACK);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.MasterSquirrel) {
+                    if (view.getEntityType(y, x) == EntityType.MasterSquirrel) {
                         gc.setFill(Color.BROWN);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);
                     }
-                    if (view.getEntityType(y, x) == EntityTypes.MasterSquirrelBot) {
+                    if (view.getEntityType(y, x) == EntityType.MasterSquirrelBot) {
                         gc.setFill(Color.PURPLE);
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE,
                                 CELL_SIZE);

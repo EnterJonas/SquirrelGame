@@ -8,7 +8,7 @@ public class BadBeast extends Character {
     private static final int VISION = 6;
     private int bites;
 
-    public BadBeast(EntityTypes entityType, int energy, XY position) {
+    public BadBeast(EntityType entityType, int energy, XY position) {
         super(entityType, energy + ENERGY, position);
         this.bites = 7;
     }
@@ -40,7 +40,7 @@ public class BadBeast extends Character {
     }
 
     public String toString() {
-        return "B";
+        return "BadBeast";
     }
 
 }

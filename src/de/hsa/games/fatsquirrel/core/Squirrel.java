@@ -6,7 +6,7 @@ public abstract class Squirrel extends Character {
 
     private int suspensionCounter = 0;
 
-    public Squirrel(EntityTypes entityType, int energy, XY position) {
+    public Squirrel(EntityType entityType, int energy, XY position) {
         super(entityType, energy, position);
     }
 

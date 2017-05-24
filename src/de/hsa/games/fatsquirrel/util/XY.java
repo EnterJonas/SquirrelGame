@@ -7,13 +7,26 @@ public class XY {
     private final int x;
     private final int y;
 
+
+    public static final XY ZERO_ZERO = new XY(0, 0);
+    public static final XY RIGHT = new XY(1, 0);
+    public static final XY LEFT = new XY(-1, 0);
+    public static final XY UP = new XY(0, -1);
+    public static final XY DOWN = new XY(0, 1);
+    public static final XY RIGHT_UP = new XY(1, -1);
+    public static final XY RIGHT_DOWN = new XY(1, 1);
+    public static final XY LEFT_UP = new XY(-1, -1);
+    public static final XY LEFT_DOWN = new XY(-1, 1);
+
+
+
     public XY(int y, int x) {
         this.x = x;
         this.y = y;
     }
 
-    public XY setNewPosition( XY vector) {
-        return new XY(this.getY() + vector.getY(), this.getX()+vector.getX());
+    public XY setNewPosition(XY vector) {
+        return new XY(this.getY() + vector.getY(), this.getX() + vector.getX());
     }
 
     public XY getNewPosition() {
@@ -21,6 +34,10 @@ public class XY {
         int currentY = this.getY();
         int currentX = this.getX();
         return new XY(currentY + random.nextInt(1 + 1 + 1) - 1, currentX + random.nextInt(1 + 1 + 1) - 1);
+    }
+
+    public XY minus(XY xy) {
+        return new XY(this.getY() - xy.getY(), this.getX() - xy.getX());
     }
 
     //subtracts one position from another
@@ -50,28 +67,36 @@ public class XY {
             return steps;
     }
 
-    public XY add(XY xy){
-        return new XY(y+xy.y, x+xy.x);
+    public XY add(XY xy) {
+        return new XY(y + xy.y, x + xy.x);
     }
 
-    public XY add(int y, int x){
-        return new XY(this.x+x,this.y+y);
+    public XY plus(int y, int x) {
+        return new XY(this.x + x, this.y + y);
     }
 
-    public XY createMovementVector(XY vector){
+    /**
+     * @param xy a second coordinate pair
+     * @return the euklidian distance (pythagoras)
+     */
+    public double distanceFrom(XY xy) {
+        return Math.round(Math.sqrt(Math.pow(xy.getX() - this.getX(), 2) + Math.pow(xy.getY() - this.getY(), 2)));
+    }
+
+    public XY createMovementVector(XY vector) {
         int x = 0;
         int y = 0;
-        if(vector.getY() > 0){
+        if (vector.getY() > 0) {
             y = 1;
-        }else if(vector.getY() < 0){
+        } else if (vector.getY() < 0) {
             y = -1;
         }
-        if(vector.getX() > 0){
+        if (vector.getX() > 0) {
             x = 1;
-        }else if (vector.getX() < 0){
+        } else if (vector.getX() < 0) {
             x = -1;
         }
-        return new XY (y,x);
+        return new XY(y, x);
     }
 
     public int getX() {
@@ -82,7 +107,7 @@ public class XY {
         return y;
     }
 
-    public XY getRandomPositionInWorld(XY size){
+    public XY getRandomPositionInWorld(XY size) {
         Random random = new Random();
         int randomY = random.nextInt((size.getY() - 2)) + 1;
         int randomX = random.nextInt((size.getX() - 2)) + 1;

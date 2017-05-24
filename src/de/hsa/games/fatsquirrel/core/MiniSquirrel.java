@@ -9,7 +9,7 @@ public class MiniSquirrel extends Squirrel {
     private MasterSquirrel parent;
 
 
-    public MiniSquirrel(EntityTypes entityType, int energy, XY position, MasterSquirrel parent) {
+    public MiniSquirrel(EntityType entityType, int energy, XY position, MasterSquirrel parent) {
         super(entityType, energy, position);
         this.parent = parent;
     }
@@ -37,7 +37,7 @@ public class MiniSquirrel extends Squirrel {
     }
 
     public String toString() {
-        return "M";
+        return "MiniSquirrel";
     }
 
 

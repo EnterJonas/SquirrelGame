@@ -1,8 +1,7 @@
 package de.hsa.games.fatsquirrel.util;
 
 import de.hsa.games.fatsquirrel.core.Entity;
-import de.hsa.games.fatsquirrel.core.EntityTypes;
-import de.hsa.games.fatsquirrel.core.Squirrel;
+import de.hsa.games.fatsquirrel.core.EntityType;
 
 import java.util.Arrays;
 
@@ -165,7 +164,7 @@ public class List {
         return null;
     }
 
-    public Entity[] getEntityList(EntityTypes no1, EntityTypes no2, EntityTypes no3){
+    public Entity[] getEntityList(EntityType no1, EntityType no2, EntityType no3){
         Entity[] container = new Entity[getSize()];
         current = listHead;
         Entity helper;

@@ -5,7 +5,7 @@ import de.hsa.games.fatsquirrel.util.XY;
 
 public abstract class MasterSquirrel extends Squirrel {
 
-    public MasterSquirrel(EntityTypes entityType, int energy, XY position) {
+    public MasterSquirrel(EntityType entityType, int energy, XY position) {
         super(entityType, energy, position);
     }
 
