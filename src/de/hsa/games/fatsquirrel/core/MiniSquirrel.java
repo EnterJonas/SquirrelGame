@@ -5,7 +5,7 @@ import de.hsa.games.fatsquirrel.util.XY;
 
 public class MiniSquirrel extends Squirrel {
 
-    private static final int VISION = 20;
+    private static final int VISION = 10;
     private MasterSquirrel parent;
 
 
@@ -37,7 +37,7 @@ public class MiniSquirrel extends Squirrel {
     }
 
     public String toString() {
-        return "MiniSquirrel";
+        return "MINI_SQUIRREL";
     }
 
 

@@ -23,33 +23,13 @@ public class GameImpl extends Game {
         super(state);
         this.squirrels = squirrels;
 
-        //guidedOrBotOrBoth();
 
-
-        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityType.HandOperatedMasterSquirrel, 0, new XY(1, 1));
+        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityType.MASTER_SQUIRREL, 0, new XY(1, 1));
         this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
 
-        this.masterSquirrelBot = new MasterSquirrelBot(EntityType.MasterSquirrelBot, 0, new XY(1, 1), "idk");
+        this.masterSquirrelBot = new MasterSquirrelBot(EntityType.MASTER_SQUIRREL, 0, new XY(1, 1), "idk");
         this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
 
-    }
-
-    private void guidedOrBotOrBoth() {
-        if (this.squirrels != null) {
-            for (int i = 0; i < squirrels.length; i++) {
-                if (this.squirrels[i] != null) {
-                    switch (this.squirrels[i].getEntityType()) {
-                        case MasterSquirrelBot:
-                            this.masterSquirrelBot = (MasterSquirrelBot) this.squirrels[i];
-                            break;
-                        case HandOperatedMasterSquirrel:
-                            this.handOperatedMasterSquirrel = (HandOperatedMasterSquirrel) this.squirrels[i];
-                            break;
-                    }
-                    this.getState().getBoard().getEntitySet().addEntity(squirrels[i]);
-                }
-            }
-        }
     }
 
 
@@ -99,7 +79,7 @@ public class GameImpl extends Game {
         try {
             method.invoke(this, castedParams);
         } catch (NumberFormatException e) {
-            System.err.println("FEHLER: falsches Argument");
+            LOGGER.severe("FEHLER: falsches Argument");
         } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -107,13 +87,13 @@ public class GameImpl extends Game {
 
     public void help() {
         for (CommandTypeInfo cti : GameCommandType.values()) {
-            System.out.println(">> " + cti.getName() + cti.getHelpText());
+            LOGGER.info(">> " + cti.getName() + cti.getHelpText());
         }
         handOperatedMasterSquirrel.setInput(new XY(0, 0));
     }
 
     public void exit() {
-        System.out.println("Exit");
+        LOGGER.info("Exit");
         System.exit(0);
     }
 
@@ -140,7 +120,7 @@ public class GameImpl extends Game {
     }
 
     public String master_energy() {
-        System.out.println("MASTER_ENERGY");
+        LOGGER.info("MASTER_ENERGY");
 
         if (handOperatedMasterSquirrel == null)
             return "Kein Eichhörnchen vorhanden";
@@ -153,7 +133,7 @@ public class GameImpl extends Game {
         LOGGER.info("SPAWN_MINI");
         try {
             if (handOperatedMasterSquirrel.getEnergy() > energy) {
-                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityType.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityType.MINI_SQUIRREL, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
                 this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
                 handOperatedMasterSquirrel.updateEnergy(-energy);
             } else {
@@ -170,7 +150,7 @@ public class GameImpl extends Game {
         int energy = 200;
         try {
             if (handOperatedMasterSquirrel.getEnergy() > energy) {
-                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityType.MiniSquirrel, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
+                MiniSquirrel miniSquirrel = new MiniSquirrel(EntityType.MINI_SQUIRREL, energy, handOperatedMasterSquirrel.getPosition(), handOperatedMasterSquirrel);
                 this.getState().getBoard().getEntitySet().addEntity(miniSquirrel);
                 handOperatedMasterSquirrel.updateEnergy(-energy);
             } else {

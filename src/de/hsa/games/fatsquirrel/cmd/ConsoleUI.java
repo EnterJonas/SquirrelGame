@@ -19,26 +19,24 @@ public class ConsoleUI implements UI{
                         case Wall:
                             System.out.print("#");
                             break;
-                        case BadBeast:
+                        case BAD_BEAST:
                             System.out.print("B");
                             break;
-                         case GoodBeast:
+                         case GOOD_BEAST:
                              System.out.print("G");
                              break;
-                        case BadPlant:
+                        case BAD_PLANT:
                             System.out.print("b");
                             break;
-                        case GoodPlant:
+                        case GOOD_PLANT:
                             System.out.print("g");
                             break;
-                        case MiniSquirrel:
+                        case MINI_SQUIRREL:
                             System.out.print("M");
                             break;
-                        case HandOperatedMasterSquirrel:
+                        case MASTER_SQUIRREL:
                             System.out.print("S");
                             break;
-                        case MasterSquirrelBot:
-                            System.out.print("O");
                     }
                 else System.out.print(" ");
             }

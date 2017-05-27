@@ -1,14 +1,12 @@
 package de.hsa.games.fatsquirrel.core;
 
 public enum EntityType {
-    //TODO need to assign letters in render code
-    BadBeast,
-    BadPlant,
-    GoodBeast,
-    GoodPlant,
-    MasterSquirrel,
-    MiniSquirrel,
-    MasterSquirrelBot,
-    HandOperatedMasterSquirrel,
-    Wall
+    BAD_BEAST,
+    BAD_PLANT,
+    GOOD_BEAST,
+    GOOD_PLANT,
+    MINI_SQUIRREL,
+    MASTER_SQUIRREL,
+    Wall,
+    NONE;
 }

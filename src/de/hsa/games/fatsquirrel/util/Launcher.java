@@ -9,14 +9,16 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.omg.PortableInterceptor.LOCATION_FORWARD;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Launcher extends Application {
 
     private Timer timer = new Timer();
-    private Scanner scanner = new Scanner(System.in);
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public void startGame(Game game){
         timer.schedule(new PeriodicTask(game),0, 100);
@@ -37,60 +39,12 @@ public class Launcher extends Application {
         }
     }
 
-    private void menu(String [] args, Launcher launcher){
-        chooseGameType(launcher, args);
-
-    }
-
-    private void chooseGameType(Launcher launcher, String [] args){
-        System.out.println("Choose gameType you want to play");
-        System.out.println("1 >> for SinglePlayer mode without bot");
-        System.out.println("2 >> for SinglePlayer mode without userInput");
-        System.out.println("3 >> for SinglePLayer (against) a bot");
-        System.out.println("4 >> exit this menu");
-        int input = scanner.nextInt();
-        MasterSquirrel hand = new HandOperatedMasterSquirrel(EntityType.HandOperatedMasterSquirrel, 0, new XY(1,1));
-        MasterSquirrel bot = new MasterSquirrelBot(EntityType.MasterSquirrelBot, 0, new XY(1,1), "idk");
-        if(input == 1){
-            chooseUI(launcher,args, hand, null);
-        }else if (input == 2){
-            chooseUI(launcher,args, null, bot);
-        }else if(input == 3){
-            chooseUI(launcher,args, hand, bot);
-        }else if(input == 4){
-            System.exit(-1);
-        }else{
-            chooseGameType(launcher, args);
-        }
-    }
-
-
-    private void chooseUI(Launcher launcher, String [] args, MasterSquirrel hand, MasterSquirrel bot){
-        System.out.println("Please enter one of the following");
-        System.out.println("1 >> to start game in console mode");
-        System.out.println("2 >> to start game in graphic mode");
-        System.out.println("3 >> exit this menu");
-        int input = scanner.nextInt();
-        if(input == 1){
-            startConsoleGame(launcher, hand, bot);
-        }else if (input == 2){
-            startGUIGame(args);
-        }else if(input == 3){
-            System.exit(-1);
-        }else{
-            chooseUI(launcher, args, hand, bot);
-        }
-    }
-
-
-
-
-    private void startConsoleGame(Launcher launcher, MasterSquirrel hand, MasterSquirrel bot){
+    private void startConsoleGame(Launcher launcher){
         UI ui = new ConsoleUI();
         Board board = new Board(new BoardConfig());
         State state = new State(board);
 
-        GameImpl gi = new GameImpl(state, hand, bot);
+        GameImpl gi = new GameImpl(state);
         gi.setUi(ui);
 
         launcher.startGame(gi);
@@ -104,7 +58,7 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        System.out.println("The game begins now...");
+        LOGGER.info("The game begins now...");
         BoardConfig boardConfig = new BoardConfig();
 
         Board board = new Board(boardConfig);
@@ -142,8 +96,10 @@ public class Launcher extends Application {
             throw new RuntimeException("Problems with creating the log files");
         }
 
-
         Launcher launcher = new Launcher();
-        launcher.menu(args, launcher);
+        //launcher.startConsoleGame(launcher);
+        launcher.startGUIGame(args);
+
+
     }
 }

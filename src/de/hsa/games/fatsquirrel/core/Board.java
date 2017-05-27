@@ -42,17 +42,17 @@ public class Board {
             for (int amount = 0; amount < Integer.parseInt(boardConfig.getEntityListing()[i][1]); amount++) {
                 EntityType entityType = (EntityType.valueOf(boardConfig.getEntityListing()[i][0]));
                 switch (entityType) {
-                    case GoodPlant:
-                        entitySet.addEntity(new GoodPlant(EntityType.GoodPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
+                    case GOOD_PLANT:
+                        entitySet.addEntity(new GoodPlant(EntityType.GOOD_PLANT, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
-                    case BadPlant:
-                        entitySet.addEntity(new BadPlant(EntityType.BadPlant, 0, temp.getRandomPositionInWorld(this.getSize())));
+                    case BAD_PLANT:
+                        entitySet.addEntity(new BadPlant(EntityType.BAD_PLANT, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
-                    case GoodBeast:
-                        entitySet.addEntity(new GoodBeast(EntityType.GoodBeast, 0, temp.getRandomPositionInWorld(this.getSize())));
+                    case GOOD_BEAST:
+                        entitySet.addEntity(new GoodBeast(EntityType.GOOD_BEAST, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
-                    case BadBeast:
-                        entitySet.addEntity(new BadBeast(EntityType.BadBeast, 0, temp.getRandomPositionInWorld(this.getSize())));
+                    case BAD_BEAST:
+                        entitySet.addEntity(new BadBeast(EntityType.BAD_BEAST, 0, temp.getRandomPositionInWorld(this.getSize())));
                         break;
                     case Wall:
                         entitySet.addEntity(new Wall(EntityType.Wall, 0, temp.getRandomPositionInWorld(this.getSize())));

@@ -138,13 +138,12 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
             //decides what kind of entities are affected by implosion
             EntityType[] entitiesToLookFor = {
-                    EntityType.MiniSquirrel,
-                    EntityType.MasterSquirrelBot,
-                    EntityType.HandOperatedMasterSquirrel,
-                    EntityType.BadPlant,
-                    EntityType.BadBeast,
-                    EntityType.GoodBeast,
-                    EntityType.GoodPlant
+                    EntityType.MINI_SQUIRREL,
+                    EntityType.MASTER_SQUIRREL,
+                    EntityType.BAD_PLANT,
+                    EntityType.BAD_BEAST,
+                    EntityType.GOOD_BEAST,
+                    EntityType.GOOD_PLANT
             };
 
             //stores found entities in array
@@ -160,7 +159,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                     if (!(miniSquirrel.getParent().equals(currentSelected)) || ((MiniSquirrel) currentSelected).getParent().equals(miniSquirrel.getParent())) {
                         int energyLoss = (int) (200 * (miniSquirrel.getEnergy() / impactArea) * (1 - distance / impactRadius));
                         //make energyLoss negative if entity is off good nature
-                        if (!(currentSelected.getEntityType() == EntityType.BadPlant || currentSelected.getEntityType() == EntityType.BadBeast)) {
+                        if (!(currentSelected.getEntityType() == EntityType.BAD_PLANT || currentSelected.getEntityType() == EntityType.BAD_BEAST)) {
                             energyLoss *= -1;
                         }
                         //decide whether there is enough energy left in selected entity
