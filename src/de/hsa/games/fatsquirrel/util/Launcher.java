@@ -6,9 +6,7 @@ import de.hsa.games.fatsquirrel.cmd.UI;
 import de.hsa.games.fatsquirrel.core.*;
 import de.hsa.games.fatsquirrel.logger.MyLogger;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,7 +20,7 @@ public class Launcher extends Application {
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private void menu(String[] args, Launcher launcher) {
-        System.out.print("SquirrelGame[1=SinglePlayer 2=MultiPlayer vs. Bot 3= Zuschauermodus 4=Verlassen]");
+        System.out.print("SquirrelGame[1=SinglePlayer 2=MultiPlayer vs. Bot 3=Zuschauermodus 4=Verlassen]");
         int selection = scanner.nextInt();
         if (selection == 1) {
             singlePlayer(args, launcher);
@@ -41,7 +39,7 @@ public class Launcher extends Application {
     }
 
     private void multiPlayer(String[] args, Launcher launcher) {
-        System.out.print("[Bitte geben Sie ein Zahl von 1 - 10 für die Anzahl der gegnerischen Bots ein]");
+        System.out.print("SquirrelGame[Bitte geben Sie ein Zahl von 1 - 10 für die Anzahl der gegnerischen Bots ein]");
         checkAmountAndWriteArray();
         LaunchHelper.setMasterSquirrel(new HandOperatedMasterSquirrel(EntityType.MASTER_SQUIRREL, 0, new XY(1, 1)));
         UISelection(args, launcher);
@@ -60,13 +58,13 @@ public class Launcher extends Application {
     }
 
     private void viewerMode(String[] args, Launcher launcher) {
-        System.out.print("[Bitte geben Sie ein Zahl von 1 - 10 für die Anzahl der Bots ein]");
+        System.out.print("SquirrelGame[Bitte geben Sie ein Zahl von 1 - 10 für die Anzahl der Bots ein]");
         checkAmountAndWriteArray();
         UISelection(args, launcher);
     }
 
     private void UISelection(String[] args, Launcher launcher) {
-        System.out.print("[1=Spiel auf Konsole 2=Spiel mit Grafischer Oberfläche 3=Verlassen]");
+        System.out.print("SquirrelGame[1=Spiel auf Konsole 2=Spiel mit Grafischer Oberfläche 3=Verlassen]");
         int selection = scanner.nextInt();
 
         if (selection == 1) {
@@ -124,11 +122,7 @@ public class Launcher extends Application {
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("SquirrelGame");
         primaryStage.setAlwaysOnTop(true);
-        fxUI.getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent evt) {
-                System.exit(-1);
-            }
-        });
+        fxUI.getWindow().setOnCloseRequest(evt -> System.exit(-1));
         primaryStage.show();
         startGame(game);
     }
@@ -144,6 +138,5 @@ public class Launcher extends Application {
         launcher.menu(args, launcher);
         //launcher.startGUIGame(args);
     }
-
 
 }

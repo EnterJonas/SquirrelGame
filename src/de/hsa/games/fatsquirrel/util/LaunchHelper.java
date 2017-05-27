@@ -8,12 +8,12 @@ public class LaunchHelper {
     private static MasterSquirrelBot[] bots;
     private static HandOperatedMasterSquirrel masterSquirrel;
 
-    public static void setMasterSquirrel(HandOperatedMasterSquirrel guidedmasterSquirrel){
-        masterSquirrel = guidedmasterSquirrel;
+    public static void setMasterSquirrel(HandOperatedMasterSquirrel guidedMasterSquirrel){
+        masterSquirrel = guidedMasterSquirrel;
     }
 
-    public static void setBots(MasterSquirrelBot... botss){
-        bots = botss;
+    public static void setBots(MasterSquirrelBot... botArray){
+        bots = botArray;
     }
 
     public static HandOperatedMasterSquirrel getMasterSquirrel(){
