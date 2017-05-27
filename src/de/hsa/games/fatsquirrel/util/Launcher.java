@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class Launcher extends Application {
-
+a
     private Timer timer = new Timer();
     private Scanner scanner = new Scanner(System.in);
     private MasterSquirrelBot[] masterSquirrels;
