@@ -2,6 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
@@ -16,7 +17,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
     public void nextStep(EntityContext context) {
         if(getInput() != null){
             if(!isStunned()){
-                XY nextPosition = this.getPosition().setNewPosition(getInput());
+                XY nextPosition = new XYsupport().setNewPosition(this.getPosition(), getInput());
                 setInput(null);
                 context.tryMove(this,nextPosition);
             }else{

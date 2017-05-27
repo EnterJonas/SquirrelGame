@@ -5,9 +5,9 @@ import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
 import de.hsa.games.fatsquirrel.botapi.SpawnException;
-import de.hsa.games.fatsquirrel.cmd.NotEnoughEnergyException;
 import de.hsa.games.fatsquirrel.util.XY;
-import java.util.Random;
+import de.hsa.games.fatsquirrel.util.XYsupport;
+
 import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
@@ -32,7 +32,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
                             @Override
                             public void nextStep(ControllerContext view) {
                                 if(!isStunned()){
-                                    XY direction = getPosition().getNewPosition();
+                                    XY direction = new XYsupport().getNewPosition(getPosition());
                                     view.move(direction);
                                 }else{
                                     setSuspensionCounter(-1);

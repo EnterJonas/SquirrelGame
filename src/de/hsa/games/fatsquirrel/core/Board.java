@@ -2,6 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class Board {
 
@@ -43,19 +44,19 @@ public class Board {
                 EntityType entityType = (EntityType.valueOf(boardConfig.getEntityListing()[i][0]));
                 switch (entityType) {
                     case GOOD_PLANT:
-                        entitySet.addEntity(new GoodPlant(EntityType.GOOD_PLANT, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new GoodPlant(EntityType.GOOD_PLANT, 0, new XYsupport().getRandomPositionInWorld(this.getSize())));
                         break;
                     case BAD_PLANT:
-                        entitySet.addEntity(new BadPlant(EntityType.BAD_PLANT, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new BadPlant(EntityType.BAD_PLANT, 0, new XYsupport().getRandomPositionInWorld(this.getSize())));
                         break;
                     case GOOD_BEAST:
-                        entitySet.addEntity(new GoodBeast(EntityType.GOOD_BEAST, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new GoodBeast(EntityType.GOOD_BEAST, 0, new XYsupport().getRandomPositionInWorld(this.getSize())));
                         break;
                     case BAD_BEAST:
-                        entitySet.addEntity(new BadBeast(EntityType.BAD_BEAST, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new BadBeast(EntityType.BAD_BEAST, 0, new XYsupport().getRandomPositionInWorld(this.getSize())));
                         break;
                     case Wall:
-                        entitySet.addEntity(new Wall(EntityType.Wall, 0, temp.getRandomPositionInWorld(this.getSize())));
+                        entitySet.addEntity(new Wall(EntityType.Wall, 0, new XYsupport().getRandomPositionInWorld(this.getSize())));
                         break;
                 }
             }

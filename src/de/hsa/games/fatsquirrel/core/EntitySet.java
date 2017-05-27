@@ -2,6 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class EntitySet {
 
@@ -17,7 +18,7 @@ public class EntitySet {
     //add entity to array
     public void addEntity(Entity newEntity) {
         if (isPositionInUse(newEntity.getPosition())) {
-            newEntity.updatePosition(newEntity.getPosition().getRandomPositionInWorld(this.size));
+            newEntity.updatePosition(new XYsupport().getRandomPositionInWorld(this.size));
             this.addEntity(newEntity);
         } else {
             entities[getFreePosition()] = newEntity;

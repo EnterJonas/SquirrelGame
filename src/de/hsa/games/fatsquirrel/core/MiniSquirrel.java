@@ -2,6 +2,7 @@ package de.hsa.games.fatsquirrel.core;
 
 
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class MiniSquirrel extends Squirrel {
 
@@ -19,7 +20,7 @@ public class MiniSquirrel extends Squirrel {
     @Override
     public void nextStep(EntityContext context) {
        if(!isStunned()){
-           XY estimateDestination = this.getPosition().getNewPosition();
+           XY estimateDestination = new XYsupport().getNewPosition(this.getPosition());
            context.tryMove(this, estimateDestination);
        }else{
            setSuspensionCounter(-1);

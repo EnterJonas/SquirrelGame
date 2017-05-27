@@ -1,6 +1,7 @@
 package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class GoodBeast extends Character {
 
@@ -15,7 +16,7 @@ public class GoodBeast extends Character {
     public void nextStep(EntityContext context) {
         if (!isStunned()) {
             //get random next position
-            XY nextPosition = this.getPosition().getNewPosition();
+            XY nextPosition = new XYsupport().getNewPosition(this.getPosition());
             //check random next position
             context.tryMove(this,nextPosition);
             setSuspensionCounter(4);

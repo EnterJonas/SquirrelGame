@@ -1,6 +1,7 @@
 package de.hsa.games.fatsquirrel.core;
 
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 import java.util.logging.Logger;
 
@@ -206,7 +207,7 @@ public class FlattenedBoard implements EntityContext, BoardView {
             //if nextSquirrel is in range of bad-beast's vision
             if (badBeast.getPosition().distanceFrom(nextSquirrel) <= badBeast.getVision()) {
                 //update moveDirection to attack the squirrel
-                moveDirection = badBeast.getPosition().setNewPosition(badBeast.getPosition().createMovementVector(nextSquirrel.createVector(badBeast.getPosition())));
+                moveDirection = new XYsupport().setNewPosition(badBeast.getPosition(), new XYsupport().createMovementVector(new XYsupport().createVector(nextSquirrel, badBeast.getPosition())));
                 LOGGER.info(badBeast + " hat Faehrte aufgenommen und verfolgt " + nearestSquirrel);
             }
         }
@@ -247,9 +248,9 @@ public class FlattenedBoard implements EntityContext, BoardView {
             //if squirrel is in vision
             if (goodBeast.getPosition().distanceFrom(nearestSquirrel.getPosition()) <= goodBeast.getVision()) {
                 //create negative movement vector in order to run away
-                XY movementVector = goodBeast.getPosition().createMovementVector(nearestSquirrel.getPosition().createVector(goodBeast.getPosition()));
+                XY movementVector = new XYsupport().createMovementVector(new XYsupport().createVector(nearestSquirrel.getPosition(), goodBeast.getPosition()));
                 XY negativeMovementVector = new XY(movementVector.getY() * -1, movementVector.getX() * -1);
-                moveDirection = goodBeast.getPosition().setNewPosition(negativeMovementVector);
+                moveDirection = new XYsupport().setNewPosition(goodBeast.getPosition(), negativeMovementVector);
                 LOGGER.info(goodBeast + " ist auf der Flucht vor " + nearestSquirrel);
             }
         }
@@ -274,10 +275,10 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
 
         if (miniSquirrel.getPosition().distanceFrom(nextFood != null ? nextFood.getPosition() : null) < miniSquirrel.getVision()) {
-            moveDirection = miniSquirrel.getPosition().setNewPosition(miniSquirrel.getPosition().createMovementVector(nextFood != null ? nextFood.getPosition().createVector(miniSquirrel.getPosition()) : null));
+            moveDirection = new XYsupport().setNewPosition(miniSquirrel.getPosition(), new XYsupport().createMovementVector((nextFood != null ? new XYsupport().createVector(nextFood.getPosition(), miniSquirrel.getPosition()) : null)));
             LOGGER.info(miniSquirrel + " hat Essensverfolgung aufgenommen");
         } else if (((nextSquirrel) != null && ((MasterSquirrel) nextSquirrel).isParent(miniSquirrel)) && miniSquirrel.getPosition().distanceFrom(nextSquirrel.getPosition()) < miniSquirrel.getVision()) {
-            moveDirection = miniSquirrel.getPosition().setNewPosition(miniSquirrel.getPosition().createMovementVector(nextSquirrel.getPosition().createVector(miniSquirrel.getPosition())));
+            moveDirection = new XYsupport().setNewPosition(miniSquirrel.getPosition(), new XYsupport().createMovementVector(new XYsupport().createVector(nextSquirrel.getPosition(), miniSquirrel.getPosition())));
             LOGGER.info(miniSquirrel + " auf dem Weg nach hause");
         }
 
@@ -397,16 +398,16 @@ public class FlattenedBoard implements EntityContext, BoardView {
         //replace entity
         XY temp = new XY(0, 0);
         if (entityToKill instanceof GoodPlant) {
-            board.getEntitySet().addEntity(new GoodPlant(EntityType.GOOD_PLANT, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new GoodPlant(EntityType.GOOD_PLANT, 0, new XYsupport().getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof BadPlant) {
-            board.getEntitySet().addEntity(new BadPlant(EntityType.BAD_PLANT, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new BadPlant(EntityType.BAD_PLANT, 0, new XYsupport().getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof GoodBeast) {
-            board.getEntitySet().addEntity(new GoodBeast(EntityType.GOOD_BEAST, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new GoodBeast(EntityType.GOOD_BEAST, 0, new XYsupport().getRandomPositionInWorld(getSize())));
         }
         if (entityToKill instanceof BadBeast) {
-            board.getEntitySet().addEntity(new BadBeast(EntityType.BAD_BEAST, 0, temp.getRandomPositionInWorld(getSize())));
+            board.getEntitySet().addEntity(new BadBeast(EntityType.BAD_BEAST, 0, new XYsupport().getRandomPositionInWorld(getSize())));
         }
     }
 
