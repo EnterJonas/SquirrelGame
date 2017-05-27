@@ -14,22 +14,18 @@ public class GameImpl extends Game {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel;
-    private MasterSquirrelBot masterSquirrelBot;
-
-    private MasterSquirrel[] squirrels;
 
 
-    public GameImpl(State state, MasterSquirrel... squirrels) {
+    public GameImpl(State state,HandOperatedMasterSquirrel handOperatedMasterSquirrel, MasterSquirrelBot... squirrels) {
         super(state);
-        this.squirrels = squirrels;
-
-
-        this.handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(EntityType.MASTER_SQUIRREL, 0, new XY(1, 1));
-        this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
-
-        this.masterSquirrelBot = new MasterSquirrelBot(EntityType.MASTER_SQUIRREL, 0, new XY(1, 1), "idk");
-        this.getState().getBoard().getEntitySet().addEntity(masterSquirrelBot);
-
+        if(squirrels != null)
+        for(int i = 0; i < (squirrels).length; i++){
+            this.getState().getBoard().getEntitySet().addEntity(squirrels[i]);
+        }
+        if(handOperatedMasterSquirrel != null){
+            this.getState().getBoard().getEntitySet().addEntity(handOperatedMasterSquirrel);
+            this.handOperatedMasterSquirrel = handOperatedMasterSquirrel;
+        }
     }
 
 

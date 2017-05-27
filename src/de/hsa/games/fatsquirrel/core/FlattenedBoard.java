@@ -143,7 +143,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
         this.flattenBoard = board.flatten();
     }
 
-
     public Entity[] nearestEntity(XY positionOfEntityLookingForEntities, EntityType... no) {
         Entity[] entities = null;
         try {
@@ -167,30 +166,6 @@ public class FlattenedBoard implements EntityContext, BoardView {
         }
         return entities;
     }
-
-
-    //returns nearest squirrel
-//    public Entity[] nearestEntity(XY positionOfEntityLookingForPlayer, EntityType ... no) {
-//        if (board.getEntitySet().collectRace(no) != null) {
-//            Entity[] entities = board.getEntitySet().collectRace(no);
-//            Entity temp;
-//            for (int i = 1; i < entities.length; i++) {
-//                for (int j = i; j > 0; j--) {
-//                    int squirrelVector1 = entities[j].getPosition().getSteps(positionOfEntityLookingForPlayer);
-//                    int squirrelVector2 = entities[j - 1].getPosition().getSteps(positionOfEntityLookingForPlayer);
-//                    if (!(squirrelVector1 == 0 && squirrelVector2 == 0)) {
-//                        if (squirrelVector1 < squirrelVector2) {
-//                            temp = entities[j];
-//                            entities[j] = entities[j - 1];
-//                            entities[j - 1] = temp;
-//                        }
-//                    }
-//                }
-//            }
-//            return entities;
-//        }
-//        return null;
-//    }
 
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
